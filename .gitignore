@@ -1,4 +1,4 @@
-App/node_modules/
+node_modules
 *.bak
 bundle.js
 bundle.js.map
