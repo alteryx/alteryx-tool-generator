@@ -6,6 +6,8 @@
   "dependencies": {
     "colors": "^1.1.2",
     "commander": "^2.9.0",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^15.0.1",
     "fs": "0.0.1-security",
     "minimist": "^1.2.0",
     "path": "^0.12.7",
@@ -17,6 +19,7 @@
     "eslint-config-airbnb": "15.0.1",
     "eslint-config-prettier": "2.1.1",
     "eslint-loader": "1.7.1",
+    "eslint-plugin-flowtype": "^2.34.0",
     "eslint-plugin-prettier": "2.1.1",
     "prettier": "1.3.1"
   },
