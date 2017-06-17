@@ -14,13 +14,10 @@ program
   // .option('-p, --parameter', 'add a parameter and description')
   .parse(process.argv)
 
-let userInput = {}
-
 const schema = {
   properties: {
 	// Example: {
 	//     description: 'Enter your password',     // Prompt displayed to the user. If not supplied name will be used.
-	//     type: 'string',                 // Specify the type of input to expect.
 	//     pattern: /^\w+$/,                  // Regular expression that input must be valid against.
 	//     message: 'Password must be letters', // Warning message to display if validation fails.
 	//     hidden: true,                        // If true, characters entered will either not be output to console or will be outputed using the `replace` string.
@@ -36,20 +33,23 @@ const schema = {
       required: true
     },
     NameIsFileName: {
-      description: 'Is the tool name the same as the file name? (T/F)',
-      type: 'string',
-      required: true
+    	description: 'Is the tool name the same as the file name? (T/F)',
+    	pattern: /T{1}|F{1}/,
+    	message: 'Please enter T (true) or F (false).',
+    	required: true
     },
     RootToolName: {
-      description: 'Root Tool Name',
-      type: 'string',
-      required: true
+    	description: 'Root Tool Name',
+    	// pattern: / /,
+    	// message: '',
+	    required: true
     },
     Version: {
-      description: 'Tool Version',
-      type: 'number',
-      required: false,
-      default: 1
+    	description: 'Tool Version',
+    	pattern: /[\d]/,
+    	message: 'Must be written as a whole number.',
+    	default: 1,
+    	required: false
     },
     Author: {
       description: 'Author',
@@ -58,55 +58,65 @@ const schema = {
       required: false
     },
     Company: {
-      description: 'Company',
-      type: 'string',
-      required: false
+    	description: 'Company',
+    	// pattern: / /,
+    	// message: '',
+    	required: false
     },
     Copyright: {
-      description: 'Copyright',
-      type: 'string',
-      required: false
+    	description: 'Copyright',
+    	// pattern: / /,
+    	// message: '',
+    	required: false
     },
     Category: {
-      description: 'Category',
-      type: 'string',
-      required: false
+    	description: 'Category',
+    	// pattern: / /,
+    	// message: '',
+    	required: false
     },
     SearchTags: {
-      description: 'Search Tags - separate by commas',
-      type: 'string',
-      required: false
+    	description: 'Search Tags - separate by commas',
+    	// pattern: / /,
+    	// message: '',
+    	required: false
     },
     Description: {
-      description: 'Description',
-      type: 'string',
-      required: false
+    	description: 'Description',
+    	// pattern: / /,
+    	// message: '',
+    	required: false
     },
     DescriptionLink: {
-      description: 'Description Link',
-      type: 'string',
-      required: false
+    	description: 'Description Link',
+    	// pattern: / /,
+    	// message: '',
+    	required: false
     },
     Backend: {
-      description: 'Will the engine for your tool be a macro (M) or JavaScript (J) file?',
-      type: 'string',
-      required: true
+    	description: 'Will the engine for your tool be a macro (M) or JavaScript (J) file?',
+    	pattern: /M{1}|J{1}/,
+    	message: 'Please enter M (macro) or J (JavaScript).',
+    	required: true
     },
     IconPath: {
-      description: 'Path to Icon image file',
-      type: 'string',
-      required: false,
-      default: 'default_icon.png'
+    	description: 'Path to Icon image file',
+    	pattern: /(.png$)|(.jpeg$)|(.jpg$)/,
+    	message: 'Please select an image file.  File extension must be .png, .jpg, or .jpeg.',
+    	default: 'default_icon.png',
+    	required: false
     },
     InputConnections: {
-      description: 'Number of input connections',
-      type: 'number',
-      required: true
+    	description: 'Number of input connections',
+    	pattern: /\d/,
+    	message: 'Must be written as a whole number.',
+    	required: true
     },
     OutputConnections: {
-      description: 'Number of output connections',
-      type: 'number',
-      required: true
+    	description: 'Number of output connections',
+    	pattern: /\d/,
+    	message: 'Must be written as a whole number.',
+    	required: true
     }
   }
 }
@@ -115,8 +125,12 @@ let toolDirectory = ''
 
 console.log('\nEnter the following to configure your project...\n')
 prompt.message = '' // removes prompt: from the front of each question
-prompt.start()
 
+let userInput = {}
+let inputConnections = []
+let outputConnections = []
+
+prompt.start()
 prompt.get(schema, function (err, result) {
   const userInput = result
   const folderName = userInput.ToolName + '_v' + userInput.Version
@@ -129,38 +143,58 @@ prompt.get(schema, function (err, result) {
   })
   console.log('\nUser Inputs:\n')
   console.log(JSON.stringify(userInput, null, 4))
+
+  let inputSchema = {
+  	'properties': {}
+  }
+
+  for (let i = 1; i <= userInput.InputConnections; i++) {
+  	let name = 'InputConnectionName_' + i
+  	let nameValue = {
+  		description: 'Input Connection Name ' + i,
+   		type: 'string',
+  	 	required: false
+  	}
+  	inputSchema.properties[name] = nameValue
+
+  	let label = 'InputConnectionLabel_' + i
+  	let labelValue = {
+   		description: 'Input Connection Label ' + i,
+   		type: 'string',
+  	 	required: false
+  	}
+  	inputSchema.properties[label] = labelValue
+  }
+
+  let outputSchema = {
+  	'properties': {}
+  }
+
+  for (let i = 1; i <= userInput.OutputConnections; i++) {
+  	let name = 'OutputConnectionName_' + i
+  	let nameValue = {
+  		description: 'Output Connection Name ' + i,
+   		type: 'string',
+  	 	required: false
+  	}
+  	outputSchema.properties[name] = nameValue
+
+  	let label = 'OutputConnectionLabel_' + i
+  	let labelValue = {
+   		description: 'Output Connection Label ' + i,
+   		type: 'string',
+  	 	required: false
+  	}
+  	outputSchema.properties[label] = labelValue
+  }
+
+  userInput.InputConnections > 0 ? console.log(`\n${userInput.InputConnections} input connections specified. Please enter name and label for each (Optional).\n`) : ''
+  // prompt.get needs to be nested otherwise it acts weird and results in duplicate entries
+  prompt.get(inputSchema, function (err, result) {
+  	inputConnections.push(result)
+    userInput.OutputConnections > 0 ? console.log(`\n${userInput.OutputConnections} output connections specified. Please enter name and label for each (Optional).`) : ''
+    prompt.get(outputSchema, function (err, result) {
+      outputConnections.push(result)
+    })
+  })
 })
-
-let inputConnections = {}
-
-const inputSchema = {
-  properties: {
-    InputConnectionLabel: {
-    	description: '',
-    	type: 'string',
-    	required: false
-    },
-    InputConnectionName: {
-    	description: '',
-    	type: 'string',
-    	required: false
-    },
-  }
-}
-
-let outputConnections = {}
-
-const outputSchema = {
-  properties: {
-    OutputConnectionLabel: {
-    	description: '',
-    	type: 'string',
-    	required: false
-    },
-    OutputConnectionName: {
-    	description: '',
-    	type: 'string',
-    	required: false
-    },
-  }
-}
