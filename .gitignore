@@ -2,3 +2,5 @@ App/node_modules/
 *.bak
 bundle.js
 bundle.js.map
+node_modules
+.eslintrc.json
