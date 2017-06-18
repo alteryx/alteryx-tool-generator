@@ -7,6 +7,7 @@ const argv = require('minimist')(process.argv.slice(2))
 const program = require('commander')
 const prompt = require('prompt')
 const colors = require('colors')
+const os = require('os')
 
 program
   .version('v1.0.0')
@@ -26,10 +27,10 @@ const schema = {
 	//     before: function(value) { return 'v' + value; } // Runs before node-prompt callbacks. It modifies user's input
 	// },
     ToolName: {
-	  	description: 'Tool Name',
-	    pattern: /^[a-zA-Z\s\-]+$/,
-	    message: 'Tool Name must be only letters, spaces, or dashes',
-	    required: true
+      description: 'Tool Name',
+      pattern: /^[a-zA-Z\s\-]+$/,
+      message: 'Tool Name must be only letters, spaces, or dashes',
+      required: true
     },
     NameIsFileName: {
     	description: 'Is the tool name the same as the file name? (T/F)',
@@ -51,10 +52,10 @@ const schema = {
     	required: false
     },
     Author: {
-	  	description: 'Author',
-	    pattern: /^[a-zA-Z\s\-]+$/,
-	    message: 'Author must be only letters, spaces, or dashes',
-	    required: false
+      description: 'Author',
+      pattern: /^[a-zA-Z\s\-]+$/,
+      message: 'Author must be only letters, spaces, or dashes',
+      required: false
     },
     Company: {
     	description: 'Company',
@@ -120,6 +121,8 @@ const schema = {
   }
 }
 
+let toolDirectory = ''
+
 console.log('\nEnter the following to configure your project...\n')
 prompt.message = '' // removes prompt: from the front of each question
 
@@ -129,7 +132,15 @@ let outputConnections = []
 
 prompt.start()
 prompt.get(schema, function (err, result) {
-  userInput = result
+  const userInput = result
+  const folderName = userInput.ToolName + '_v' + userInput.Version
+  toolDirectory = 'C:\\Users\\' + os.userInfo().username +  '\\AppData\\Roaming\\Alteryx\\Tools\\' + folderName
+  fs.mkdir(toolDirectory, function(err) {
+    if (err) {
+      return console.error(err)
+    }
+    console.log(folderName + ' folder has been created')
+  })
   console.log('\nUser Inputs:\n')
   console.log(JSON.stringify(userInput, null, 4))
 
