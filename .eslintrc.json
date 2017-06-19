@@ -18,5 +18,9 @@
     "es6": true,
     "browser": true,
     "node": true
-  }
+  },
+  "rules": {
+   "linebreak-style": 0,
+   "no-console": 0
+ }
 }
