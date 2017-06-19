@@ -1,11 +1,11 @@
 // Alteryx
 // (c) 2017
 
-const path = require('path')
-const argv = require('minimist')(process.argv.slice(2))
+// const path = require('path')
+// const argv = require('minimist')(process.argv.slice(2))
 const program = require('commander')
-const prompt = require('prompt')
-const colors = require('colors')
+// const prompt = require('prompt')
+// const colors = require('colors')
 const input = require('./app/user-input.js')
 const directory = require('./app/create-directory.js')
 
