@@ -20,20 +20,21 @@ exports.getUserInput = () => {
       // },
         ToolName: {
           description: 'Tool Name',
-          pattern: /^[a-zA-Z\s\-]+$/,
-          message: 'Tool Name must be only letters, spaces, or dashes',
+          pattern: /^[a-zA-Z\s\-\d]+$/,
+          // letters, numbers, spaces, periods, dashes, underscores,
+          message: 'Tool Name must be only letters, numbers, spaces, or dashes',
           required: true
         },
-        NameIsFileName: {
-          description: 'Is the tool name the same as the file name? (T/F)',
-          pattern: /T{1}|F{1}/,
-          message: 'Please enter T (true) or F (false).',
-          required: true
-        },
+        // NameIsFileName: {
+        //   description: 'Is the tool name the same as the file name? (T/F)',
+        //   pattern: /T{1}|F{1}/,
+        //   message: 'Please enter T (true) or F (false).',
+        //   required: true
+        // },
         RootToolName: {
           description: 'Root Tool Name',
-      // pattern: / /,
-      // message: '',
+          pattern: /^[a-zA-Z\s\-\d]+$/,
+          message: 'Tool Name must be only letters, numbers, spaces, or dashes',
           required: true
         },
         Version: {
@@ -47,30 +48,24 @@ exports.getUserInput = () => {
           description: 'Author',
           pattern: /^[a-zA-Z\s\-]+$/,
           message: 'Author must be only letters, spaces, or dashes',
-          required: false
+          required: true
         },
         Company: {
           description: 'Company',
-      // pattern: / /,
-      // message: '',
+          pattern: /^[a-zA-Z\s\-\d]+$/,
+          message: 'Tool Name must be only letters, numbers, spaces, or dashes',
           required: false
         },
         Copyright: {
           description: 'Copyright',
-      // pattern: / /,
-      // message: '',
+          pattern: /^[a-zA-Z\s\-\d]+$/,
+          message: 'Tool Name must be only letters, numbers, spaces, or dashes',
           required: false
         },
         Category: {
           description: 'Category',
-      // pattern: / /,
-      // message: '',
-          required: false
-        },
-        SearchTags: {
-          description: 'Search Tags - separate by commas',
-      // pattern: / /,
-      // message: '',
+          pattern: /^[a-zA-Z\s\-\d]+$/,
+          message: 'Tool Name must be only letters, numbers, spaces, or dashes',
           required: false
         },
         Description: {
@@ -79,8 +74,8 @@ exports.getUserInput = () => {
       // message: '',
           required: false
         },
-        DescriptionLink: {
-          description: 'Description Link',
+        SearchTags: {
+          description: 'Search Tags - separate by commas',
       // pattern: / /,
       // message: '',
           required: false
@@ -93,8 +88,8 @@ exports.getUserInput = () => {
         },
         IconPath: {
           description: 'Path to Icon image file',
-          pattern: /(.png$)|(.jpeg$)|(.jpg$)/,
-          message: 'Please select an image file.  File extension must be .png, .jpg, or .jpeg.',
+          pattern: /(.png$)/,
+          message: 'Please select a png image file.',
           default: 'default_icon.png',
           required: false
         },
@@ -181,6 +176,7 @@ exports.getUserInput = () => {
         userInput.OutputConnections > 0 ? console.log(`\n${userInput.OutputConnections} output connections specified. Please enter name and label for each (Optional).`) : ''
         prompt.get(outputSchema, function (err, result) {
           outputConnections.push(result)
+          console.log(userInput)
           resolve(userInput)
         })
       })
