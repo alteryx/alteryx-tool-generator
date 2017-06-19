@@ -7,7 +7,7 @@ const program = require('commander')
 const prompt = require('prompt')
 const colors = require('colors')
 const input = require('./app/user-input.js')
-const toolFolder = require('./app/tool-folder.js')
+const directory = require('./app/create-directory.js')
 
 program
   .version('v1.0.0')
@@ -18,4 +18,4 @@ const getUserInput = input.getUserInput()
 const promises = [getUserInput]
 
 Promise.all(promises)
-  .then(toolFolder.createFolder)
+  .then(directory.createDirectory)
