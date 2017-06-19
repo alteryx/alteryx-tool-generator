@@ -3,9 +3,11 @@ const fs = require('fs')
 
 // Creates tool folder in user directory, if successful message displays that folder was created
 exports.createDirectory = (result) => {
-  const userInput = result[0]
-  const folderName = `${userInput.ToolName}_v${userInput.Version}`
-  const toolDirectory = `C:\\Users\\${os.userInfo().username}\\AppData\\Roaming\\Alteryx\\Tools\\${folderName}`
+  const toolName = result[0].ToolName
+  const version = result[0].Version
+  const folderName = `${toolName}_v${version}`
+  const username = os.userInfo().username
+  const toolDirectory = `C:\\Users\\${username}\\AppData\\Roaming\\Alteryx\\Tools\\${folderName}`
 
   fs.mkdir(toolDirectory, (err) => {
     if (err) {
