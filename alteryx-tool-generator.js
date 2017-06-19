@@ -1,13 +1,12 @@
 // Alteryx
 // (c) 2017
 
-const fs = require('fs')
 const path = require('path')
 const argv = require('minimist')(process.argv.slice(2))
 const program = require('commander')
 const prompt = require('prompt')
 const colors = require('colors')
-const os = require('os')
+const toolFolder = require('./tool-folder.js')
 
 program
   .version('v1.0.0')
@@ -132,15 +131,8 @@ let outputConnections = []
 
 prompt.start()
 prompt.get(schema, function (err, result) {
+  toolFolder.createFolder(err, result)
   const userInput = result
-  const folderName = userInput.ToolName + '_v' + userInput.Version
-  toolDirectory = 'C:\\Users\\' + os.userInfo().username +  '\\AppData\\Roaming\\Alteryx\\Tools\\' + folderName
-  fs.mkdir(toolDirectory, function(err) {
-    if (err) {
-      return console.error(err)
-    }
-    console.log(folderName + ' folder has been created')
-  })
   console.log('\nUser Inputs:\n')
   console.log(JSON.stringify(userInput, null, 4))
 
