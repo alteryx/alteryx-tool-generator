@@ -14,7 +14,9 @@ exports.createDirectory = (result) => new Promise((resolve, reject) => {
       reject(console.error(err))
     }
     console.log(`\n${folderName} folder has been created`)
-    result.ToolDirectory = toolDirectory
-    resolve(result)
+    const inputResult = result
+    inputResult.ToolDirectory = toolDirectory
+
+    resolve(inputResult)
   })
 })
