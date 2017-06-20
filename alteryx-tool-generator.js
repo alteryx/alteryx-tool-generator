@@ -8,14 +8,13 @@ const program = require('commander')
 // const colors = require('colors')
 const input = require('./app/user-input.js')
 const directory = require('./app/create-directory.js')
+const engineHTML = require('./app/create-engine-html.js')
 
 program
   .version('v1.0.0')
   // .option('-p, --parameter', 'add a parameter and description')
   .parse(process.argv)
 
-const getUserInput = input.getUserInput()
-const promises = [getUserInput]
-
-Promise.all(promises)
+input.getUserInput()
   .then(directory.createDirectory)
+  .then(engineHTML.createEngineHTML)
