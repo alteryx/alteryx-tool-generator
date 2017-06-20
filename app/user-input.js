@@ -3,16 +3,6 @@ const prompt = require('prompt')
 exports.getUserInput = () => new Promise((resolve, reject) => {
   const schema = {
     properties: {
-      // Example: {
-      //     description: 'Enter your password',     // Prompt displayed to the user. If not supplied name will be used.
-      //     pattern: /^\w+$/,                  // Regular expression that input must be valid against.
-      //     message: 'Password must be letters', // Warning message to display if validation fails.
-      //     hidden: true,                        // If true, characters entered will either not be output to console or will be outputed using the `replace` string.
-      //     replace: '*',                        // If `hidden` is set it will replace each hidden character with the specified string.
-      //     default: 'lamepassword',             // Default value to use if no value is entered.
-      //     required: true                        // If true, value entered must be non-empty.
-      //     before: function(value) { return 'v' + value; } // Runs before node-prompt callbacks. It modifies user's input
-      // },
       ToolName: {
         description: 'Tool Name',
         pattern: /^[a-zA-Z\s\-\d]+$/,
@@ -20,12 +10,6 @@ exports.getUserInput = () => new Promise((resolve, reject) => {
         message: 'Tool Name must be only letters, numbers, spaces, or dashes',
         required: true
       },
-        // NameIsFileName: {
-        //   description: 'Is the tool name the same as the file name? (T/F)',
-        //   pattern: /T{1}|F{1}/,
-        //   message: 'Please enter T (true) or F (false).',
-        //   required: true
-        // },
       RootToolName: {
         description: 'Root Tool Name',
         pattern: /^[a-zA-Z\s\-\d]+$/,
@@ -65,14 +49,10 @@ exports.getUserInput = () => new Promise((resolve, reject) => {
       },
       Description: {
         description: 'Description',
-      // pattern: / /,
-      // message: '',
         required: false
       },
       SearchTags: {
         description: 'Search Tags - separate by commas',
-      // pattern: / /,
-      // message: '',
         required: false
       },
       Backend: {
@@ -106,9 +86,6 @@ exports.getUserInput = () => new Promise((resolve, reject) => {
   console.log('\nEnter the following to configure your project...\n')
   prompt.message = '' // removes prompt: from the front of each question
 
-  const inputConnections = []
-  const outputConnections = []
-
   prompt.start()
   prompt.get(schema, (err, result) => {
     if (err) {
@@ -116,8 +93,6 @@ exports.getUserInput = () => new Promise((resolve, reject) => {
       return
     }
     const userInput = result
-    console.log('\nUser Inputs:\n')
-    console.log(JSON.stringify(userInput, null, 4))
 
     const inputSchema = {
       'properties': {}
@@ -168,13 +143,14 @@ exports.getUserInput = () => new Promise((resolve, reject) => {
     }
     // prompt.get needs to be nested otherwise it acts weird and results in duplicate entries
     prompt.get(inputSchema, (inputErr, inputResult) => {
-      inputConnections.push(inputResult)
+      userInput.InputDetails = inputResult
       if (userInput.OutputConnections > 0) {
         console.log(`\n${userInput.OutputConnections} output connections specified. Please enter name and label for each (Optional).`)
       }
       prompt.get(outputSchema, (outputErr, outputResult) => {
-        outputConnections.push(outputResult)
-        console.log(userInput)
+        userInput.OutputDetails = outputResult
+        console.log('\nProject Configuration:\n')
+        console.log(JSON.stringify(userInput, null, 4))
         resolve(userInput)
       })
     })
