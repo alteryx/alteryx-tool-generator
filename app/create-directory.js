@@ -2,7 +2,7 @@ const os = require('os')
 const fs = require('fs')
 
 // Creates tool folder in user directory, if successful message displays that folder was created
-exports.createDirectory = (result) => {
+exports.createDirectory = (result) => new Promise((resolve, reject) => {
   const toolName = result[0].ToolName
   const version = result[0].Version
   const folderName = `${toolName}_v${version}`
@@ -11,8 +11,9 @@ exports.createDirectory = (result) => {
 
   fs.mkdir(toolDirectory, (err) => {
     if (err) {
-      return console.error(err)
+      reject(console.error(err))
     }
-    return console.log(`\n${folderName} folder has been created`)
+    console.log(`\n${folderName} folder has been created`)
+    resolve(result[0])
   })
-}
+})
