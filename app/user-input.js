@@ -92,6 +92,7 @@ exports.getUserInput = () => new Promise((resolve, reject) => {
       reject(err)
       return
     }
+
     const userInput = result
 
     const inputSchema = {
