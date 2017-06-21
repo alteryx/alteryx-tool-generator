@@ -9,6 +9,7 @@ const program = require('commander')
 const input = require('./app/user-input.js')
 const directory = require('./app/create-directory.js')
 const engineHTML = require('./app/create-engine-html.js')
+const configXml = require('./app/create-configxml.js')
 
 program
   .version('v1.0.0')
@@ -18,3 +19,4 @@ program
 input.getUserInput()
   .then(directory.createDirectory)
   .then(engineHTML.createEngineHTML)
+  .then(configXml.createConfigXml)

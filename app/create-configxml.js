@@ -1,21 +1,18 @@
 // this module creates Config.xml, which contains the metadata for the tool's popup when installing through a YXI
 const fs = require('fs')
-const path = require('path')
-const builder = require('xmlbuilder');
-
-// *** this section will load the stored values from the JSON object
+const builder = require('xmlbuilder')
 
 exports.createConfigXml = (result) => new Promise((resolve, reject) => {
-    // temp hard coded input values. The actual values will come from a JSON object.
     const name = result.ToolName
     const description = result.Description
     const toolVersion = result.Version
     const categoryName = result.Category
     const author = result.Author
     const icon = result.IconPath
-    // const configXmlPath = ``
+    const configXmlPath = `${result.ToolDirectory}\\Config.xml`
 
-    var xml = builder.create('AlteryxJavaScriptPlugin', {encoding: 'UTF-8'})
+    // build and store the xml inside a variable
+    const xml = builder.create('AlteryxJavaScriptPlugin', {encoding: 'UTF-8'})
         .ele('Properties')
             .ele('MetaInfo')
                 .ele('Name', name).up()
@@ -26,12 +23,12 @@ exports.createConfigXml = (result) => new Promise((resolve, reject) => {
                 .ele('Icon', icon)
         .end({ pretty: true});
 
-    // need to create relative path for file creation
-    fs.writeFile('Config.xml', xml, (err) => {
+    // writes the actual xml file with the path and xml as inputs
+    fs.writeFile(configXmlPath, xml, (err) => {
         if (err) reject(err)
-        console.log('Config.xml has been saved')
-        // const inputResult = result
-        // inputResult.ConfigXml = configXmlPath
-        // resolve(inputResult)
+        console.log('Config.xml has been created.')
+        const inputResult = result
+        inputResult.ConfigXml = configXmlPath
+        resolve(inputResult)
     })
 })
