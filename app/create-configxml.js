@@ -5,14 +5,15 @@ const builder = require('xmlbuilder');
 
 // *** this section will load the stored values from the JSON object
 
-exports.createConfigXml = () => {
+exports.createConfigXml = (result) => new Promise((resolve, reject) => {
     // temp hard coded input values. The actual values will come from a JSON object.
-    const name = 'ToolName'
-    const description = 'The tool\'s description.'
-    const toolVersion = '0.5.0'
-    const categoryName = 'Connectors'
-    const author = 'Von Miller'
-    const icon = `${name}_Icon.png`
+    const name = result.ToolName
+    const description = result.Description
+    const toolVersion = result.Version
+    const categoryName = result.Category
+    const author = result.Author
+    const icon = result.IconPath
+    // const configXmlPath = ``
 
     var xml = builder.create('AlteryxJavaScriptPlugin', {encoding: 'UTF-8'})
         .ele('Properties')
@@ -27,7 +28,10 @@ exports.createConfigXml = () => {
 
     // need to create relative path for file creation
     fs.writeFile('Config.xml', xml, (err) => {
-        if (err) throw err
+        if (err) reject(err)
         console.log('Config.xml has been saved')
+        // const inputResult = result
+        // inputResult.ConfigXml = configXmlPath
+        // resolve(inputResult)
     })
-}
+})
