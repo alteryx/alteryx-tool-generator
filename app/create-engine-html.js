@@ -1,8 +1,9 @@
- // This module copies the JavascriptPluginExampleGui.html from the Alteryx install folder, updates it with configured connections and adds it to the new tool directory.
- // const os = require('os')
- const fs = require('fs')
+
+// This module copies the JavascriptPluginExampleGui.html from the Alteryx install folder, updates it with configured connections and adds it to the new tool directory.
+// const os = require('os')
+const fs = require('fs')
 // const winreg = require('windreg')
- // const path = require('path')
+// const path = require('path')
 
  const readEngineHTML = (result) => new Promise((resolve, reject) => {
    if (result === undefined) {
