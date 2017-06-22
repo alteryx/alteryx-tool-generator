@@ -49,8 +49,12 @@ const writeUpdatedEngineHTML = (result) => new Promise((resolve, reject) => {
 })
 
 // Creates Engine.html file, if successful message displays that file was created
-exports.createEngineHTML = (result) => {
+exports.createEngineHTML  = (result) => new Promise((resolve, reject) => {
+  if (result === undefined) {
+    reject(console.log('createEngineHTML: input undefined'))
+  }
   readEngineHTML(result)
     .then(updateEngineHTML)
     .then(writeUpdatedEngineHTML)
-}
+  resolve(result)
+})

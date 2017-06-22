@@ -18,5 +18,5 @@ program
 
 input.getUserInput()
   .then(directory.createDirectory)
-  // .then(engineHTML.createEngineHTML)
+  .then(engineHTML.createEngineHTML)
   .then(guiHTML.createGuiHTML)
