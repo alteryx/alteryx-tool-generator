@@ -43,3 +43,4 @@ const testNodes = () => {
 // promise chain that creates Config.xml and then runs assert tests
 configXml.createConfigXml(result)
          .then(testNodes)
+         
