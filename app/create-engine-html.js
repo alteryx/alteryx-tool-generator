@@ -1,139 +1,114 @@
-
 // This module copies the JavascriptPluginExampleGui.html from the Alteryx install folder, updates it with configured connections and adds it to the new tool directory.
-// const os = require('os')
 const fs = require('fs')
-// const winreg = require('windreg')
-// const path = require('path')
 
- const readEngineHTML = (result) => new Promise((resolve, reject) => {
-   if (result === undefined) {
-     reject(console.error('readEngineHTML: input undefined'))
-   }
-   // NEED TO MAKE THIS DYNAMIC
-   const JSEnginePath = 'C:\\Program Files\\Alteryx\\bin\\HtmlPlugins\\JavascriptPluginExample\\JavascriptPluginExampleEngine.html'
-   const directory = `${result.ToolDirectory}\\`
-   const fileName = `${result.ToolName}_v${result.Version}_Engine.html`
-   const filePath = `${directory}${fileName}`
-   const fileData = fs.readFileSync(JSEnginePath, 'utf8')
-   const userObj = result
-   userObj.EngineHTMLPath = filePath
-   userObj.EngineHTMLData = fileData
-   resolve(userObj)
- })
+const readEngineHTML = (result) => new Promise((resolve, reject) => {
+  if (result === undefined) {
+    reject(console.error('readEngineHTML: input undefined'))
+  }
 
- const prepareInputText = (result) => {
-   const details = result.InputDetails
-   const detailArray = Object.keys(details).map((e) => details[e])
-   const inputNames = detailArray.filter((value, index) => !(index % 2))
+  const userObj = result
+  const JSEnginePath = `${userObj.AlteryxInstallDir}\\HtmlPlugins\\JavascriptPluginExample\\JavascriptPluginExampleEngine.html`
+  const directory = `${result.ToolDirectory}\\`
+  const fileName = `${result.ToolName}_v${result.Version}_Engine.html`
+  const filePath = `${directory}${fileName}`
+  const fileData = fs.readFileSync(JSEnginePath, 'utf8')
 
-   inputNames.forEach((item, index, arr) => {
-     const newArr = arr
-     newArr[index] = {
-       type: item,
-       GroupInfo: {
-         count: 0,
-         grouping: 'false'
-       }
-     }
-     return newArr
-   })
+  userObj.EngineHTMLPath = filePath
+  userObj.EngineHTMLData = fileData
 
-   return inputNames
- }
+  resolve(userObj)
+})
 
- const prepareOutputText = (result) => {
-   const details = result.OutputDetails
-   const detailArray = Object.keys(details).map((e) => details[e])
-   const outputNames = detailArray.filter((value, index) => !(index % 2))
+const prepareInputText = (result) => {
+  const details = result.InputDetails
+  const detailArray = Object.keys(details).map((e) => details[e])
+  const inputNames = detailArray.filter((value, index) => !(index % 2))
 
-   outputNames.forEach((item, index, arr) => {
-     const newArr = arr
-     newArr[index] = {
-       name: item
-     }
-     return newArr
-   })
+  inputNames.forEach((item, index, arr) => {
+    const newArr = arr
+    newArr[index] = {
+      type: item,
+      GroupInfo: {
+        count: 0,
+        grouping: 'false'
+      }
+    }
+    return newArr
+  })
 
-   return outputNames
- }
+  return inputNames
+}
 
- const replaceConnectionText = (result, find, replace) => new Promise((resolve, reject) => {
-   if (result === undefined) {
-     reject(console.error('replaceConnectionText: input undefined'))
-   }
-   const userObj = result
-   const updatedText = userObj.EngineHTMLData.replace(find, replace)
-   userObj.EngineHTMLData = updatedText
-   resolve(userObj)
- })
+const prepareOutputText = (result) => {
+  const details = result.OutputDetails
+  const detailArray = Object.keys(details).map((e) => details[e])
+  const outputNames = detailArray.filter((value, index) => !(index % 2))
 
- const updateEngineHTML = (result) => new Promise((resolve, reject) => {
-   if (result === undefined) {
-     reject(console.error('updateEngineHTML: input undefined'))
-   }
+  outputNames.forEach((item, index, arr) => {
+    const newArr = arr
+    newArr[index] = {
+      name: item
+    }
+    return newArr
+  })
 
-   const userObj = result
+  return outputNames
+}
 
-   const inputFind = /IncomingConnections:.*[\n\s]+.*[\n\s]+.*[\n\s]+.*[\n\s]+.*[\n\s]+.*[\n\s]+\}\]/m
-   const inputReplace = `IncomingConnections: ${JSON.stringify(prepareInputText(userObj), null, 4)}`
-   const outputFind = /OutgoingConnections:.*[\n\s]+.*[\n\s]+\}\]/m
-   const outputReplace = `OutgoingConnections: ${JSON.stringify(prepareOutputText(userObj), null, 4)}`
+const replaceConnectionText = (result, find, replace) => new Promise((resolve, reject) => {
+  if (result === undefined) {
+    reject(console.error('replaceConnectionText: input undefined'))
+  }
 
-   replaceConnectionText(userObj, inputFind, inputReplace)
-   replaceConnectionText(userObj, outputFind, outputReplace)
+  const userObj = result
+  const updatedText = userObj.EngineHTMLData.replace(find, replace)
 
-   resolve(userObj)
- })
+  userObj.EngineHTMLData = updatedText
 
- const writeUpdatedEngineHTML = (result) => new Promise((resolve, reject) => {
-   if (result === undefined) {
-     reject(console.error('updateEngineHTML: input undefined'))
-   }
+  resolve(userObj)
+})
 
-   const inputObj = result
+const updateEngineHTML = (result) => new Promise((resolve, reject) => {
+  if (result === undefined) {
+    reject(console.error('updateEngineHTML: input undefined'))
+  }
 
-   fs.writeFileSync(inputObj.EngineHTMLPath, inputObj.EngineHTMLData)
+  const userObj = result
 
-   delete inputObj.EngineHTMLPath
-   delete inputObj.EngineHTMLData
-   resolve(inputObj)
- })
+  const inputFind = /IncomingConnections:.*[\n\s]+.*[\n\s]+.*[\n\s]+.*[\n\s]+.*[\n\s]+.*[\n\s]+\}\]/m
+  const inputReplace = `IncomingConnections: ${JSON.stringify(prepareInputText(userObj), null, 4)}`
 
- // Creates Engine.html file, if successful message displays that file was created
-// exports.createEngineHTML = (result) => {
- const createEngineHTML = (result) => {
-   readEngineHTML(result)
-     .then(updateEngineHTML)
-     .then(writeUpdatedEngineHTML)
- }
+  const outputFind = /OutgoingConnections:.*[\n\s]+.*[\n\s]+\}\]/m
+  const outputReplace = `OutgoingConnections: ${JSON.stringify(prepareOutputText(userObj), null, 4)}`
 
- const result = {
-   'ToolName': 'A',
-   'RootToolName': 'A',
-   'Version': '3',
-   'Author': 'A',
-   'Company': '',
-   'Copyright': '',
-   'Category': '',
-   'Description': '',
-   'SearchTags': '',
-   'Backend': 'J',
-   'IconPath': 'default_icon.png',
-   'InputConnections': '2',
-   'OutputConnections': '2',
-   'InputDetails': {
-     'InputConnectionName_1': 'ConnA',
-     'InputConnectionLabel_1': 'A',
-     'InputConnectionName_2': 'ConnB',
-     'InputConnectionLabel_2': 'B'
-   },
-   'OutputDetails': {
-     'OutputConnectionName_1': 'ConnC',
-     'OutputConnectionLabel_1': 'C',
-     'OutputConnectionName_2': 'ConnD',
-     'OutputConnectionLabel_2': 'D'
-   },
-   'ToolDirectory': 'C:\\Users\\swagner\\AppData\\Roaming\\Alteryx\\Tools\\A_v3'
- }
+  replaceConnectionText(userObj, inputFind, inputReplace)
+  replaceConnectionText(userObj, outputFind, outputReplace)
 
- createEngineHTML(result)
+  resolve(userObj)
+})
+
+const writeUpdatedEngineHTML = (result) => new Promise((resolve, reject) => {
+  if (result === undefined) {
+    reject(console.error('writeUPdatedEngineHTML: input undefined'))
+  }
+
+  const inputObj = result
+
+  fs.writeFileSync(inputObj.EngineHTMLPath, inputObj.EngineHTMLData)
+
+  console.log(`${inputObj.EngineHTMLPath} has been created.`)
+
+  delete inputObj.EngineHTMLPath
+  delete inputObj.EngineHTMLData
+
+  resolve(inputObj)
+})
+
+// Creates Engine.html file, if successful message displays that file was created
+exports.createEngineHTML = (result) => {
+  const userObj = readEngineHTML(result)
+    .then(updateEngineHTML)
+    .then(writeUpdatedEngineHTML)
+
+  return userObj
+}
