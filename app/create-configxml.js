@@ -3,24 +3,26 @@ const fs = require('fs')
 const builder = require('xmlbuilder')
 
 exports.createConfigXml = (result) => new Promise((resolve, reject) => {
-    const name = result.ToolName
-    const description = result.Description
-    const toolVersion = result.Version
-    const categoryName = result.Category
-    const author = result.Author
-    const icon = result.IconPath
     const configXmlPath = `${result.ToolDirectory}\\Config.xml`
+    const {
+        ToolName,
+        Description,
+        Version,
+        Category,
+        Author,
+        IconPath
+    } = result
 
     // build and store the xml inside a variable
     const xml = builder.create('AlteryxJavaScriptPlugin', {encoding: 'UTF-8'})
         .ele('Properties')
             .ele('MetaInfo')
-                .ele('Name', name).up()
-                .ele('Description', description).up()
-                .ele('ToolVersion', toolVersion).up()
-                .ele('CategoryName', categoryName).up()
-                .ele('Author', author).up()
-                .ele('Icon', icon)
+                .ele('Name', ToolName).up()
+                .ele('Description', Description).up()
+                .ele('ToolVersion', Version).up()
+                .ele('CategoryName', Category).up()
+                .ele('Author', Author).up()
+                .ele('Icon', IconPath)
         .end({ pretty: true});
 
     // writes the actual xml file with the path and xml as inputs
