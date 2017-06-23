@@ -89,7 +89,8 @@ const writeUpdatedGuiHTML = (result) => new Promise((resolve, reject) => {
 
 // Creates Gui.html file, if successful message displays that file was created
 exports.createGuiHTML = (result) => {
-  readGuiHTML(result)
+  const userObj = readGuiHTML(result)
     .then(updateGuiHTML)
     .then(writeUpdatedGuiHTML)
+  return userObj
 }
