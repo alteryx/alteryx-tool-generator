@@ -5,54 +5,57 @@ exports.getUserInput = () => new Promise((resolve, reject) => {
     properties: {
       ToolName: {
         description: 'Tool Name',
-        pattern: /^[a-zA-Z\s\-\d]+$/,
-          // letters, numbers, spaces, periods, dashes, underscores,
-        message: 'Tool Name must be only letters, numbers, spaces, or dashes',
+        pattern: /^[a-zA-Z\s\d.\-_]+$/,
+        message: 'May only contain letters, numbers, spaces, periods, underscores, or dashes.',
         required: true
       },
       RootToolName: {
         description: 'Root Tool Name',
-        pattern: /^[a-zA-Z\s\-\d]+$/,
-        message: 'Tool Name must be only letters, numbers, spaces, or dashes',
+        pattern: /^[a-zA-Z\s\d.\-_]+$/,
+        message: 'May only contain letters, numbers, spaces, periods, underscores, or dashes.',
         required: true
       },
       Version: {
         description: 'Tool Version',
-        pattern: /[\d]/,
+        pattern: /^[\d]+$/,
         message: 'Must be written as a whole number.',
         default: 1,
         required: false
       },
       Author: {
         description: 'Author',
-        pattern: /^[a-zA-Z\s-]+$/,
-        message: 'Author must be only letters, spaces, or dashes',
+        pattern: /^[a-zA-Z\s\d.\-_]+$/,
+        message: 'May only contain letters, numbers, spaces, periods, underscores, or dashes.',
         required: true
       },
       Company: {
         description: 'Company',
-        pattern: /^[a-zA-Z\s\-\d]+$/,
-        message: 'Tool Name must be only letters, numbers, spaces, or dashes',
+        pattern: /^[a-zA-Z\s\d.\-_]+$/,
+        message: 'May only contain letters, numbers, spaces, periods, underscores, or dashes.',
         required: false
       },
       Copyright: {
         description: 'Copyright',
-        pattern: /^[a-zA-Z\s\-\d]+$/,
-        message: 'Tool Name must be only letters, numbers, spaces, or dashes',
+        pattern: /^[a-zA-Z\s\d.\-_]+$/,
+        message: 'May only contain letters, numbers, spaces, periods, underscores, or dashes.',
         required: false
       },
       Category: {
         description: 'Category',
-        pattern: /^[a-zA-Z\s\-\d]+$/,
-        message: 'Tool Name must be only letters, numbers, spaces, or dashes',
+        pattern: /^[a-zA-Z\s]+$/,
+        message: 'May only contain letters or spaces.',
         required: false
       },
       Description: {
         description: 'Description',
+        pattern: /^[a-zA-Z\s\d.\-_]+$/,
+        message: 'May only contain letters, numbers, spaces, periods, underscores, or dashes.',
         required: false
       },
       SearchTags: {
-        description: 'Search Tags - separate by commas',
+        description: 'Search Tags (comma separated)',
+        pattern: /^[a-zA-Z\s,]+$/,
+        message: 'May only contain letters, spaces, or commas.',
         required: false
       },
       Backend: {
@@ -70,14 +73,14 @@ exports.getUserInput = () => new Promise((resolve, reject) => {
       },
       InputConnections: {
         description: 'Number of input connections',
-        pattern: /\d/,
-        message: 'Must be written as a whole number.',
+        pattern: /^\d{1}$/,
+        message: 'Must be written as a whole number and a maximum of nine.',
         required: true
       },
       OutputConnections: {
         description: 'Number of output connections',
-        pattern: /\d/,
-        message: 'Must be written as a whole number.',
+        pattern: /^\d{1}$/,
+        message: 'Must be written as a whole number and a maximum of nine.',
         required: true
       }
     }
@@ -103,6 +106,8 @@ exports.getUserInput = () => new Promise((resolve, reject) => {
       const name = `InputConnectionName_${i}`
       const nameValue = {
         description: `Input Connection Name ${i}`,
+        pattern: /^[a-zA-Z\s\d.\-_]+$/,
+        message: 'May only contain letters, numbers, spaces, periods, underscores, or dashes.',
         type: 'string',
         required: false
       }
@@ -111,6 +116,8 @@ exports.getUserInput = () => new Promise((resolve, reject) => {
       const label = `InputConnectionLabel_${i}`
       const labelValue = {
         description: `Input Connection Label ${i}`,
+        pattern: /^[a-zA-Z\d]{1}$/,
+        message: 'May only contain one letter or number.',
         type: 'string',
         required: false
       }
@@ -125,6 +132,8 @@ exports.getUserInput = () => new Promise((resolve, reject) => {
       const name = `OutputConnectionName_${i}`
       const nameValue = {
         description: `Output Connection Name ${i}`,
+        pattern: /^[a-zA-Z\s\d.\-_]+$/,
+        message: 'May only contain letters, numbers, spaces, periods, underscores, or dashes.',
         type: 'string',
         required: false
       }
@@ -133,6 +142,8 @@ exports.getUserInput = () => new Promise((resolve, reject) => {
       const label = `OutputConnectionLabel_${i}`
       const labelValue = {
         description: `Output Connection Label ${i}`,
+        pattern: /^[a-zA-Z\d]{1}$/,
+        message: 'May only contain one letter or number.',
         type: 'string',
         required: false
       }
