@@ -16,8 +16,8 @@ program
   .parse(process.argv)
 
   // Defining the test you want to run
-
-  //
+  // 1. It should error if result is undefined
+  // 2.
 
 
 

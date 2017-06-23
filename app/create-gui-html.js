@@ -2,58 +2,60 @@ const fs = require('fs')
 
 const readGuiHTML = (result) => new Promise((resolve, reject) => {
   if (result === undefined) {
-    reject(console.log('readGuiHTML: input undefined'))
+    reject(console.error('readGuiHTML: input undefined'))
   }
-  const installDir = result.AlteryxInstallDir
-  const JSGuiPath = `${installDir}\\HtmlPlugins\\JavascriptPluginExample\\JavascriptPluginExampleGui.html`
-  const directory = `${result.ToolDirectory}\\`
-  const fileName = `${result.ToolName}_v${result.Version}_Gui.html`
+  const userObj = result
+  const JSGuiPath = `${userObj.AlteryxInstallDir}\\HtmlPlugins\\JavascriptPluginExample\\JavascriptPluginExampleGui.html`
+  const directory = `${userObj.ToolDirectory}\\`
+  const fileName = `${userObj.ToolName}_v${userObj.Version}_Gui.html`
   const filePath = `${directory}${fileName}`
   const fileData = fs.readFileSync(JSGuiPath, 'utf8')
-  const inputObj = result
-  inputObj.GuiHTMLPath = filePath
-  inputObj.GuiHTMLData = fileData
-  resolve(inputObj)
+
+  userObj.GuiHTMLPath = filePath
+  userObj.GuiHTMLData = fileData
+
+  resolve(userObj)
 })
 
 const updateGuiHTML = (result) => new Promise((resolve, reject) => {
   if (result === undefined) {
-    reject(console.log('updateGuiHTML: input undefined'))
+    reject(console.error('updateGuiHTML: input undefined'))
   }
+
+  const userObj = result
   const titlePattern = /<title>.*<\/title>/
   const scriptPattern = /<script src=.*><\/script>/
 
-  let modifiedHTML = result.GuiHTMLData.replace(titlePattern, `<title>${result.ToolName}</title>`)
+  let modifiedHTML = userObj.GuiHTMLData.replace(titlePattern, `<title>${result.ToolName}</title>`)
   modifiedHTML = modifiedHTML.replace(scriptPattern, `<script src="${result.AlteryxInstallDir}\\RuntimeData\\HtmlAssets\\Workflows\\js\\engine_dialog_utils.js"></script>`)
 
-  const inputObj = result
+  userObj.GuiHTMLData = modifiedHTML
 
-  inputObj.GuiHTMLData = modifiedHTML
-
-  resolve(inputObj)
+  resolve(userObj)
 })
 
 const writeUpdatedGuiHTML = (result) => new Promise((resolve, reject) => {
   if (result === undefined) {
-    reject(console.log('updateGuiHTML: input undefined'))
+    reject(console.error('writeUpdatedGuiHTML: input undefined'))
   }
 
-  const inputObj = result
+  const userObj = result
 
-  fs.writeFileSync(inputObj.GuiHTMLPath, inputObj.GuiHTMLData)
+  fs.writeFileSync(userObj.GuiHTMLPath, userObj.GuiHTMLData)
 
-  console.log(`${inputObj.GuiHTMLPath} has been created.`)
+  console.log(`${userObj.GuiHTMLPath} has been created.`)
 
-  delete inputObj.GuiHTMLPath
-  delete inputObj.GuiHTMLData
-  resolve(inputObj)
+  delete userObj.GuiHTMLPath
+  delete userObj.GuiHTMLData
+
+  resolve(userObj)
 })
 
 // Creates Gui.html file, if successful message displays that file was created
 exports.createGuiHTML = (result) => {
   const userObj = readGuiHTML(result)
-    readGuiHTML(result)
       .then(updateGuiHTML)
       .then(writeUpdatedGuiHTML)
+
   return userObj
 }
