@@ -8,8 +8,8 @@ const readEngineHTML = (result) => new Promise((resolve, reject) => {
 
   const userObj = result
   const JSEnginePath = `${userObj.AlteryxInstallDir}\\HtmlPlugins\\JavascriptPluginExample\\JavascriptPluginExampleEngine.html`
-  const directory = `${result.ToolDirectory}\\`
-  const fileName = `${result.ToolName}_v${result.Version}_Engine.html`
+  const directory = `${userObj.ToolDirectory}\\`
+  const fileName = `${userObj.ToolName}_v${userObj.Version}_Engine.html`
   const filePath = `${directory}${fileName}`
   const fileData = fs.readFileSync(JSEnginePath, 'utf8')
 
@@ -55,19 +55,6 @@ const prepareOutputText = (result) => {
   return outputNames
 }
 
-const replaceConnectionText = (result, find, replace) => new Promise((resolve, reject) => {
-  if (result === undefined) {
-    reject(console.error('replaceConnectionText: input undefined'))
-  }
-
-  const userObj = result
-  const updatedText = userObj.EngineHTMLData.replace(find, replace)
-
-  userObj.EngineHTMLData = updatedText
-
-  resolve(userObj)
-})
-
 const updateEngineHTML = (result) => new Promise((resolve, reject) => {
   if (result === undefined) {
     reject(console.error('updateEngineHTML: input undefined'))
@@ -81,8 +68,8 @@ const updateEngineHTML = (result) => new Promise((resolve, reject) => {
   const outputFind = /OutgoingConnections:.*[\n\s]+.*[\n\s]+\}\]/m
   const outputReplace = `OutgoingConnections: ${JSON.stringify(prepareOutputText(userObj), null, 4)}`
 
-  replaceConnectionText(userObj, inputFind, inputReplace)
-  replaceConnectionText(userObj, outputFind, outputReplace)
+  userObj.EngineHTMLData = userObj.EngineHTMLData.replace(inputFind, inputReplace)
+  userObj.EngineHTMLData = userObj.EngineHTMLData.replace(outputFind, outputReplace)
 
   resolve(userObj)
 })
@@ -92,16 +79,16 @@ const writeUpdatedEngineHTML = (result) => new Promise((resolve, reject) => {
     reject(console.error('writeUPdatedEngineHTML: input undefined'))
   }
 
-  const inputObj = result
+  const userObj = result
 
-  fs.writeFileSync(inputObj.EngineHTMLPath, inputObj.EngineHTMLData)
+  fs.writeFileSync(userObj.EngineHTMLPath, userObj.EngineHTMLData)
 
-  console.log(`${inputObj.EngineHTMLPath} has been created.`)
+  console.log(`${userObj.EngineHTMLPath} has been created.`)
 
-  delete inputObj.EngineHTMLPath
-  delete inputObj.EngineHTMLData
+  delete userObj.EngineHTMLPath
+  delete userObj.EngineHTMLData
 
-  resolve(inputObj)
+  resolve(userObj)
 })
 
 // Creates Engine.html file, if successful message displays that file was created
