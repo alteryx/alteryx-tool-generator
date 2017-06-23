@@ -5,10 +5,12 @@
     "test": ""
   },
   "dependencies": {
+    "chai": "^4.0.2",
     "colors": "^1.1.2",
     "commander": "^2.9.0",
     "fs": "0.0.1-security",
     "minimist": "^1.2.0",
+    "mocha": "^3.4.2",
     "os": "^0.1.1",
     "path": "^0.12.7",
     "prompt": "^1.0.0",
