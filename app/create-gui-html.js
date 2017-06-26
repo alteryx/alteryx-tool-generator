@@ -45,11 +45,12 @@ const writeUpdatedGuiHTML = (result) => new Promise((resolve, reject) => {
 
   console.log(`${userObj.GuiHTMLPath} has been created.`)
 
-  delete userObj.GuiHTMLPath
-  delete userObj.GuiHTMLData
+  // delete userObj.GuiHTMLPath
+  // delete userObj.GuiHTMLData
 
   resolve(userObj)
 })
+
 
 // Creates Gui.html file, if successful message displays that file was created
 exports.createGuiHTML = (result) => {
