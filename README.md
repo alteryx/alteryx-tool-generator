@@ -1,4 +1,5 @@
-# Alteryx Tool Generator
+Alteryx Tool Generator
+===
 
 Overview
 ---
@@ -10,7 +11,6 @@ Features
 ---
 * Answer a set of questions and generate files for the scaffold
 * Generated tool can immediately be viewed in Alteryx Designer
-   * Written files are saved in *C:\Users\\{username}\AppData\Roaming\Alteryx\Tools*
 
 Getting Started
 ---
@@ -18,6 +18,7 @@ Getting Started
    1. clone this repo: [alteryx/alteryx-tool-generator](https://github.com/alteryx/alteryx-tool-generator.git)
    2. `npm install` in directory with *package.json*
 * __Run__: `node alteryx-tool-generator.js` to scaffold your tool
+* __Tool Directory__: the written files are saved in *C:\Users\\{username}\AppData\Roaming\Alteryx\Tools*
 
 Docs
 ---
@@ -33,14 +34,16 @@ Version Support
 
 |Technology|Version|
 |----------|------:|
+|Alteryx   |   11.3|
 |node      |  6.9.1|
 |npm       | 3.10.8|
-|Alteryx   |   11.3|
 
 Contribute
 ---
 * *__Placeholder__: Need to discuss*
+* Contributions, questions, and comments are all welcome and encouraged. For code contributions, please see our **Contribution guide** before submitting a pull request. Website related issues should be filed on the [Alteryx Tool Generator](https://github.com/alteryx/alteryx-tool-generator/issues/new) issue tracker.
 
 License
 ---
-MIT License
+[MIT License](https://github.com/alteryx/alteryx-tool-generator/blob/master/LICENSE)
+Alteryx Copyright 2017
