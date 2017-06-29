@@ -26,6 +26,16 @@ Options
 ---
 * *__Placeholder__: for additional commands*
 
+Version Support
+---
+* **Should we have this section?**
+
+|Technology|Version|
+|----------|------:|
+|node      |  6.9.1|
+|npm       | 3.10.8|
+|Alteryx   |   11.3|
+
 Contribute
 ---
 * *__Placeholder__: Need to discuss*
