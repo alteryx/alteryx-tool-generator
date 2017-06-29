@@ -21,6 +21,7 @@ Getting Started
 
 Docs
 ---
+* **Link to Alteryx documentation on HTML SDK**
 
 Options
 ---
