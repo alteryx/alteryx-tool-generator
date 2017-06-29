@@ -5,7 +5,7 @@ Overview
 ---
 Generator that scaffolds a custom Alteryx Designer tool with the HTML SDK and the choice of engine between JavaScript or Alteryx macro.
 
-Running the main script will prompt questions, and then write files needed to scaffold.
+Running the main Node script will prompt questions, and then write files needed to scaffold.
 
 Features
 ---
@@ -45,5 +45,5 @@ Contribute
 
 License
 ---
-[MIT License](https://github.com/alteryx/alteryx-tool-generator/blob/master/LICENSE)
-Alteryx Copyright 2017
+* [MIT License](https://github.com/alteryx/alteryx-tool-generator/blob/master/LICENSE)
+* Alteryx Copyright 2017
