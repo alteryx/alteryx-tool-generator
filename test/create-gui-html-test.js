@@ -7,7 +7,7 @@ const fs = require('fs')
 
 // Assertion libraries are tools to verify that things are correct.This makes it a lot easier to test your code, so you don't have to do thousands of if statements.
 // Testing frameworks are used to organize and execute tests. Mocha and Jasmine are two popular choices (and they're actually kinda similar)
-// Testing Environments are the places where you run your tests.
+// Testing Environments are the places where you run your tests .
 
 // Defining the test you want to run
 // 1. readGuiHTML should error if result is undefined
@@ -33,18 +33,17 @@ const result = {
 
 // Results: better practice to call results separately from the tests
 const guiHTMLResult = guiHTML.createGuiHTML(result).Promise
+console.log(result.GuiHTMLData)
 const fileName = `${result.ToolName}_v${result.Version}_Gui.html`
 const fileData = fs.readFileSync(result.GuiHTMLPath)
 const titlePattern = /<title>.*<\/title>/
 const scriptPattern = /<script src=.*><\/script>/
 const modifiedTitleTag = titlePattern.test(fileData)
 const modifiedScriptTag = scriptPattern.test(fileData)
-console.log(modifiedTitleTag)
 
 describe('readGuiHTML', function() {
-  // 1. readGuiHTML should error if result is undefined
-  it('result should be defined', function(){
-    assert.isDefined(result, 'Result is defined')
+  it('result is defined', function() {
+    assert.isDefined(result)
     console.log('Result is defined')
   })
 })
@@ -59,17 +58,15 @@ describe('updateGuiHTML', function() {
 })
 
 describe('writeUpdatedGuiHTML', function() {
-  // 2. File path should be stored in the user Object
-  it('GuiHTMLPath should be stored in the user Object', function(){
+  it('GuiHTMLPath should be stored in the user Object', function() {
     assert.propertyVal(result,'GuiHTMLPath' ,'C:\\Users\\odembowski\\AppData\\Roaming\\Alteryx\\Tools\\tool_name_v2\\tool_name_v2_Gui.html')
     console.log(`${result.GuiHTMLPath} is stored in GuiHTMLPath`)
   })
-  // 2. File Data should be stored in the user Object
-  it('GuiHTMLData should not be empty in user Object', function(){
+  it('GuiHTMLData should not be empty in user Object', function() {
     assert.isNotEmpty(result.GuiHTMLData, 'GuiHTMLData is not empty' )
     console.log('GuiHTMLData is not empty')
   })
-  it(`${fileName} should not be empty`, function(){
+  it(`${fileName} should not be empty`, function() {
     assert.isNotEmpty(fileData, `${fileName} is not empty` )
     console.log(`${fileName} is not empty` )
   })
