@@ -12,6 +12,7 @@ const directory = require('./app/create-directory.js')
 const engineHTML = require('./app/create-engine-html.js')
 const guiHTML = require('./app/create-gui-html.js')
 const configXml = require('./app/create-configxml.js')
+const toolNameConfigXml = require('./app/create-toolname-configxml.js')
 
 program
   .version('v1.0.0')
@@ -24,3 +25,4 @@ input.getUserInput()
   .then(engineHTML.createEngineHTML)
   .then(guiHTML.createGuiHTML)
   .then(configXml.createConfigXml)
+  .then(toolNameConfigXml.createToolNameConfigXml)
