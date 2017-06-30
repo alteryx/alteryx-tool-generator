@@ -66,7 +66,7 @@ exports.getUserInput = () => new Promise((resolve, reject) => {
       },
       IconPath: {
         description: 'Path to Icon image file',
-        pattern: /(.png$)/,
+        pattern: /(.png$)|(.PNG$)/,
         message: 'Please select a png image file.',
         default: 'default_icon.png',
         required: false
