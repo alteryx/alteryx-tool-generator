@@ -24,7 +24,6 @@ const readIconPNG = (result) => new Promise((resolve, reject) => {
   resolve(userObj)
 })
 
-
 const writeIconPNG = (result) => new Promise((resolve, reject) => {
   if (result === undefined) {
     reject(console.error('writeIconPNG: input undefined'))
@@ -36,14 +35,9 @@ const writeIconPNG = (result) => new Promise((resolve, reject) => {
 
   console.log(`${userObj.IconPNGPath} has been created.`)
 
-  // delete userObj.GuiHTMLPath
-  // delete userObj.GuiHTMLData
-
   resolve(userObj)
 })
 
-
-// Creates Gui.html file, if successful message displays that file was created
 exports.createIconPNG = (result) => {
   const userObj = readIconPNG(result)
       .then(writeIconPNG)
