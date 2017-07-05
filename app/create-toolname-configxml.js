@@ -7,7 +7,13 @@ const translateBackend = (backend) => {
     return 'Macro'
   }
     return 'HTML'
+}
 
+const determinePath = (backend, toolName, version) => {
+  if (backend === 'M') {
+    return `${toolName}_v${version}\\Supporting_Macros\\${toolName}-engine.yxmc`
+  }
+    return `${toolName}Engine.html`
 }
 
 exports.createToolNameConfigXml = (result) => new Promise((resolve, reject) => {
@@ -31,10 +37,10 @@ exports.createToolNameConfigXml = (result) => new Promise((resolve, reject) => {
   } = result
 
   const engineDll = translateBackend(Backend)
-  const engineDllEntryPoint = `${RootToolName}\\Supporting_Macros\\${RootToolName}-engine.yxmc`
-  const help = `${RootToolName}.htm`
-  const html = `${RootToolName}Gui.html`
-  const toolNameConfigXmlPath = `${ToolDirectory}\\${ToolName}Config.xml`
+  const engineDllEntryPoint = determinePath(Backend, ToolName, Version)
+  // const help = `${RootToolName}.htm`
+  const html = `${ToolName}_v${Version}_Gui.html`
+  const toolNameConfigXmlPath = `${ToolDirectory}\\${ToolName}_Config.xml`
 
   // Pull input connection details into an array
   const inputNames = Object.keys(InputDetails)
@@ -94,7 +100,7 @@ exports.createToolNameConfigXml = (result) => new Promise((resolve, reject) => {
         .up()
       .up()
 
-      const inputOutputRoot = xml.ele('GuiSettings', { 'help': help, 'Html': html, 'Icon': IconPath, 'SDKVersion': '10.1' })
+      const inputOutputRoot = xml.ele('GuiSettings', { 'help': "", 'Html': html, 'Icon': IconPath, 'SDKVersion': '10.1' })
       const inputRoot = inputOutputRoot.ele('InputConnections')
         for (let i = 0 ; i <= InputConnections - 1; i += 1) {
           const item = inputRoot.ele('Connection')
