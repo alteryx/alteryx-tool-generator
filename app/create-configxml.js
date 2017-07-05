@@ -28,7 +28,7 @@ exports.createConfigXml = (result) => new Promise((resolve, reject) => {
   // writes the actual xml file with the path and xml as inputs
   fs.writeFile(configXmlPath, xml, (err) => {
     if (err) reject(err)
-    console.log('Config.xml has been created')
+    console.log(`${configXmlPath} has been created.`)
     const inputResult = result
     inputResult.ConfigXml = configXmlPath
     resolve(inputResult)
