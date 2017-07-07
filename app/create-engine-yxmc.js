@@ -14,60 +14,164 @@ const tempResult = {
   "SearchTags": "tag,search",
   "Backend": "M",
   "IconPath": "default_icon.png",
-  "InputConnections": "2",
-  "OutputConnections": "2",
+  "ToolDirectory": "Path",
+  "InputConnections": "4",
+  "OutputConnections": "1",
   "InputDetails": {
     "InputConnectionName_1": "In_A",
     "InputConnectionLabel_1": "A",
     "InputConnectionName_2": "In_B",
-    "InputConnectionLabel_2": "B"
+    "InputConnectionLabel_2": "B",
+    "InputConnectionName_3": "In_C",
+    "InputConnectionLabel_3": "C",
+    "InputConnectionName_4": "In_D",
+    "InputConnectionLabel_4": "D",
+    "InputConnectionName_5": "In_E",
+    "InputConnectionLabel_5": "E"
   },
   "OutputDetails": {
     "OutputConnectionName_1": "Out_A",
     "OutputConnectionLabel_1": "A",
     "OutputConnectionName_2": "Out_B",
-    "OutputConnectionLabel_2": "B"
+    "OutputConnectionLabel_2": "B",
+    "OutputConnectionName_3": "Out_C",
+    "OutputConnectionLabel_3": "C",
+    "OutputConnectionName_4": "Out_D",
+    "OutputConnectionLabel_4": "D",
+    "OutputConnectionName_5": "Out_E",
+    "OutputConnectionLabel_5": "E"
   }
 }
 
 const createEngineYxmc = (result) => new Promise((resolve, reject) => {
-  const engineYxmcPath = ``
   const {
-    Author
+    ToolName,
+    InputDetails,
+    InputConnections,
+    OutputDetails,
+    OutputConnections,
+    ToolDirectory
   } = result
+  const engineYxmcPath = `${ToolDirectory}\\${ToolName}_Engine.yxmc`
+  // these variables will store the nodes for inputs and outputs
+  let nodeInputs = ''
+  let nodeOutputs = ''
+  let constantInputs = ''
+  let constantOutputs = ''
+  let questionInputs = ''
+  let questionOutputs = ''
+  // these variables are the <Properties> node broken into three sections
+  const propertiesTopXml = `  <Properties>
+    <Memory default="True" />
+    <GlobalRecordLimit value="0" />
+    <TempFiles default="True" />
+    <Annotation on="True" includeToolName="False" />
+    <ConvErrorLimit value="10" />
+    <ConvErrorLimit_Stop value="False" />
+    <CancelOnError value="False" />
+    <DisableBrowse value="False" />
+    <EnablePerformanceProfiling value="False" />
+    <DisableAllOutput value="False" />
+    <ShowAllMacroMessages value="False" />
+    <ShowConnectionStatusIsOn value="True" />
+    <ShowConnectionStatusOnlyWhenRunning value="True" />
+    <ZoomLevel value="0" />
+    <LayoutType>Horizontal</LayoutType>`
+  const propertiesMiddleXml = `<MetaInfo>
+    <NameIsFileName value="True" />
+    <Name>${ToolName}_Engine</Name>
+    <Description />
+    <RootToolName />
+    <ToolVersion />
+    <ToolInDb value="False" />
+    <CategoryName />
+    <SearchTags />
+    <Author />
+    <Company />
+    <Copyright />
+    <DescriptionLink actual="" displayed="" />
+    <Example>
+    <Description />
+    <File />
+    </Example>
+    </MetaInfo>
+    <Events>
+    <Enabled value="True" />
+    </Events>
+    <RuntimeProperties>
+    <Actions />`
+  const propertiesBottomXml = `<ModuleType>Macro</ModuleType>
+    <MacroCustomHelp value="False" />
+    <MacroDynamicOutputFields value="False" />
+    <MacroImageStd value="39" />
+    <MacroInputs />
+    <MacroOutputs />
+    <Wiz_CustomHelp value="False" />
+    <Wiz_CustomGraphic value="False" />
+    <Wiz_ShowOutput value="True" />
+    <Wiz_OpenOutputTools>
+    </Wiz_OpenOutputTools>
+    <Wiz_OutputMessage />
+    <Wiz_NoOutputFilesMessage />
+    <Wiz_ChainRunWizard />
+    </RuntimeProperties>
+    </Properties>`
 
-  // Alteryx XML structure with 0 macro inputs and 0 macro outputs
-  const macroXml = builder.create('AlteryxDocument')
-    .att('yxmdVer', '11.3')
-    .ele('Nodes')
-      .ele('Node', { ToolID: 1 })
-        .ele('GuiSettings', { Plugin: 'AlteryxGuiToolkit.Questions.Tab.Tab' })
-          .ele('Position', { x: '0', y: '0', width: '59', height: '59' }).up()
-          .up()
-        .ele('Properties')
-          .ele('Configuration').up()
-          .ele('Annotation', { DisplayMode: 0 })
-            .ele('Name').up()
-            .ele('DefaultAnnotationText').up()
-            .ele('Left', { value: 'False' }).up()
-            .up()
-            .up()
-            .up()
-            // .up()
-            
-  const inputXml = macroXml
-    .ele('Node', {ToolID: 2})
+  // ** This section creates the array of arrays containing connection information
+  // Pull input connection details into an array
+  const inputNames = Object.keys(InputDetails)
+
+  const newInputArray = (Object.keys(InputDetails).map((e, i) => [inputNames[i], InputDetails[e]]))
+  // use this variable for looping
+  const inputConnectionArray = []
+  // store name and label of each connection in numeric order inside inputConnectionArray
+  for (let i = 1; i <= InputConnections; i+=1) {
+      let tempArray = []
+      tempArray.push(i)
+      newInputArray.forEach((d) => {
+        const [key, value] = d
+        if (key.endsWith(`Name_${i}`)) tempArray.push(value)
+        if (key.endsWith(`Label_${i}`)) tempArray.push(value)
+      })
+      inputConnectionArray.push(tempArray)
+      tempArray = []
+  }
+
+  // Pull output connection details into an array
+  const outputNames = Object.keys(OutputDetails)
+
+  const newOutputArray = (Object.keys(OutputDetails).map((e, i) => [outputNames[i], OutputDetails[e]]))
+  // use this variable for looping
+  const outputConnectionArray = []
+  // store name and label of each connection in numeric order inside inputConnectionArray
+  for (let i = 1; i <= OutputConnections; i+=1) {
+      let tempArray = []
+      tempArray.push(i)
+      newOutputArray.forEach((d) => {
+        const [key, value] = d
+        if (key.endsWith(`Name_${i}`)) tempArray.push(value)
+        if (key.endsWith(`Label_${i}`)) tempArray.push(value)
+      })
+      outputConnectionArray.push(tempArray)
+      tempArray = []
+  }
+
+  // ** This section are the functions that create the nodes for input and outputs within the <Nodes> parent
+  // this function creates the Macro Input nodes and concats them into nodeInputs
+  // inputConnections iterates the for loop and inputConnectionArr contains the input information needed
+  const createNodeInputXml = (inputConnections, inputConnectionArr) => {
+    for (let i = 0; i < inputConnections; i++) {
+    const node = builder.create('Node').att('ToolID', i+2)
       .ele('GuiSettings', { Plugin: 'AlteryxBasePluginsGui.MacroInput.MacroInput'})
-        .ele('Position', { x: 138, y: 66}).up()
+        .ele('Position', { x: 138, y: 66*(i+1)}).up()
       .up()
-      // .up()
       .ele('Properties')
         .ele('Configuration')
-          .ele('UseFileInput', { value: false}).up()
-          .ele('Name', 'Input2 Name Placeholder').up()
-          .ele('Abbrev', 'I').up()
-          .ele('ShowFieldMap', { value: true}).up()
-          .ele('Optional', { value: false}).up()
+          .ele('UseFileInput', { value: 'False'}).up()
+          .ele('Name', inputConnectionArr[i][1]).up()
+          .ele('Abbrev', inputConnectionArr[i][2]).up()
+          .ele('ShowFieldMap', { value: 'True'}).up()
+          .ele('Optional', { value: 'False'}).up()
           .ele('TextInput')
             .ele('Configuration')
               .ele('NumRows', { value: 0}).up()
@@ -76,92 +180,177 @@ const createEngineYxmc = (result) => new Promise((resolve, reject) => {
           .up()
           .up()
           .up()
-          // .up()
-          // .up()
-          // .up()
-        .ele('Annotation', { DisplayMode: 0})
+        .ele('Annotation', { DisplayMode: 0 })
           .ele('Name').up()
           .ele('DefaultAnnotationText').up()
-          .ele('Left', { value: true}).up()
+          .ele('Left', { value: 'True' }).up()
           .up()
           .up()
-          // .up()
-      .ele('EngineSettings', { EngineDll: 'AlteryxBasePluginsEngine.dll', EngineDllEntryPoint: 'AlteryxMacroInput' }).up().up() // <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxMacroInput" />
+      .ele('EngineSettings', { EngineDll: 'AlteryxBasePluginsEngine.dll', EngineDllEntryPoint: 'AlteryxMacroInput' })
+      .end({pretty: 'True'})
 
-  const outputXml = inputXml.ele('_OutputNodes').up()
-    .up()
-    // .up()
+      nodeInputs += node
+    }
+    return nodeInputs
+  }
 
-  const bottomXml = outputXml
-    .ele('Connections').up()
+  // this function creates the Macro Output nodes and concats them into nodeInputs
+  // outputConnections iterates the for loop and outputConnectionArr contains the input information needed
+  const createNodeOutputXml = (outputConnections, outputConnectionArr) => {
+    for (let i = 0; i < outputConnections; i++) {
+    const node = builder.create('Node').att('ToolID', i+7)
+      .ele('GuiSettings', { Plugin: 'AlteryxBasePluginsGui.MacroOutput.MacroOutput'})
+        .ele('Position', { x: 338, y: 66*(i+1)}).up()
+      .up()
+      .ele('Properties')
+        .ele('Configuration')
+          .ele('Name', outputConnectionArr[i][1]).up()
+          .ele('Abbrev', outputConnectionArr[i][2]).up().up()        
+        .ele('Annotation', { DisplayMode: 0 })
+          .ele('Name').up()
+          .ele('DefaultAnnotationText').up()
+          .ele('Left', { value: 'False' }).up()
+          .up()
+          .up()
+      .ele('EngineSettings', { EngineDll: 'AlteryxBasePluginsEngine.dll', EngineDllEntryPoint: 'AlteryxMacroOutput' })
+      .end({pretty: 'True'})
+
+      nodeOutputs += node
+    }
+    return nodeOutputs
+  }
+
+  // create node for Tab tool
+  const nodeTab = builder.create('Node').att('ToolID', 1)
+    .ele('GuiSettings', { Plugin: 'AlteryxGuiToolkit.Questions.Tab.Tab' })
+      .ele('Position', { x: '0', y: '0', width: '59', height: '59' }).up()
+      .up()
     .ele('Properties')
-      .ele('Memory', { default: true }).up()
-      .ele('GlobalRecordLimit', { value: 0}).up()
-      .ele('TempFiles', { default: true}).up()
-      .ele('Annotation', { on: true, includeToolName: false}).up()
-      .ele('ConvErrorLimit', { value: 10}).up()
-      .ele('ConvErrorLimit_Stop', { value: false}).up()
-      .ele('CancelOnError', { value: false}).up()
-      .ele('DisableBrowse', { value: false}).up()
-      .ele('EnablePerformanceProfiling', { value: false}).up()
-      .ele('DisableAllOutput', { value: false}).up()
-      .ele('ShowAllMacroMessages', { value: false}).up()
-      .ele('ShowConnectionStatusIsOn', { value: true}).up()
-      .ele('ShowConnectionStatusOnlyWhenRunning', { value: true}).up()
-      .ele('ZoomLevel', { value: 0}).up()
-      .ele('LayoutType', 'Horizontal').up()
-      .ele('MetaInfo')
-        .ele('NameIsFileName', { value: true}).up()
-        .ele('Name', 'ayx-engine').up()
-        .ele('Description').up()
-        .ele('RootToolName').up()
-        .ele('ToolVersion').up()
-        .ele('ToolInDb', { value: false }).up()
-        .ele('CategoryName').up()
-        .ele('SearchTags').up()
-        .ele('Author').up()
-        .ele('Company').up()
-        .ele('Copyright').up()
-        .ele('DescriptionLink', { actual: '', displayed: ''}).up()
-        .ele('Example')
-          .ele('Description').up()
-          .ele('File').up()
-          .up()
-          .up()
-      .ele('Events')
-        .ele('Enabled', { value: true}).up()
+      .ele('Configuration').up()
+      .ele('Annotation', { DisplayMode: 0 })
+        .ele('Name').up()
+        .ele('DefaultAnnotationText').up()
+        .ele('Left', { value: 'False' }).up()
         .up()
-      .ele('RuntimeProperties')
-        .ele('Actions').up()
-        .ele('Questions')
-          .ele('Question')
-            .ele('Type', 'Tab').up()
-            .ele('Description', 'Questions').up()
-            .ele('Name', 'Tab (1)').up()
-            .ele('ToolId', { value: 1 }).up()
-            .ele('Questions').up()
-            .up()
-            .up()
-        .ele('ModuleType', 'Macro').up()
-        .ele('MacroCustomHelp', { value: false}).up()
-        .ele('MacroDynamicOutputFields', { value: false}).up()
-        .ele('MacroImageStd', { value: 39}).up()
-        .ele('MacroInputs').up()
-        .ele('MacroOutputs').up()
-        .ele('Wiz_CustomHelp', { value: false}).up()
-        .ele('Wiz_CustomGraphic', { value: false}).up()
-        .ele('Wiz_ShowOutput', { value: true}).up()
-        .ele('Wiz_OpenOutputTools').up()
-        .ele('Wiz_OutputMessage').up()
-        .ele('Wiz_NoOutputFilesMessage').up()
-        .ele('Wiz_ChainRunWizard')
-  
-  const finalXml = bottomXml.end({ pretty: true })
+        .up()
+    .end({pretty: 'True'})
 
-  fs.writeFile('test\\ayx-engine.yxmc', finalXml, (err) => {
+  // this function creates the Constant input nodes and concats them into constantInputs
+  // inputConnections iterates the for loop and inputConnectionArr contains the input information needed
+  const createConstantInputsXml = (inputConnections, inputConnectionArr) => {
+    for (let i = 0; i < inputConnections; i++) {
+    const node = builder.create('Constant')
+          .ele('Namespace', 'Question').up()
+          .ele('Name', inputConnectionArr[i][1]).up()
+          .ele('Value').up()
+          .ele('IsNumeric', { value: 'False'}).up()
+      .end({pretty: 'True'})
+
+      constantInputs += node
+    }
+    return constantInputs
+  }
+
+  // this function creates the Constant input nodes and concats them into constantInputs
+  // inputConnections iterates the for loop and inputConnectionArr contains the input information needed
+  const createConstantOutputsXml = (outputConnections, outputConnectionArr) => {
+    for (let i = 0; i < outputConnections; i++) {
+    const node = builder.create('Constant')
+          .ele('Namespace', 'Question').up()
+          .ele('Name', outputConnectionArr[i][1]).up()
+          .ele('Value').up()
+          .ele('IsNumeric', { value: 'False'}).up()
+      .end({pretty: 'True'})
+
+      constantOutputs += node
+    }
+    return constantOutputs
+  }
+
+  // this function creates the Question input nodes and concats them into questionInputs
+  // inputConnections iterates the for loop and inputConnectionArr contains the input information needed
+  const createQuestionInputsXml = (inputConnections, inputConnectionArr) => {
+    for (let i = 0; i < inputConnections; i++) {
+    const node = builder.create('Question')
+          .ele('Type', 'MacroInput').up()
+          .ele('Description', '').up()
+          .ele('Name', inputConnectionArr[i][1]).up()
+          .ele('ToolId', { value: i+2}).up()
+      .end({pretty: 'True'})
+
+      questionInputs += node
+    }
+    return questionInputs
+  }
+
+  // this function creates the Question output nodes and concats them into questionOutputs
+  // inputConnections iterates the for loop and inputConnectionArr contains the input information needed
+  const createQuestionOutputsXml = (outputConnections, outputConnectionArr) => {
+    for (let i = 0; i < outputConnections; i++) {
+    const node = builder.create('Question')
+          .ele('Type', 'MacroOutput').up()
+          .ele('Description', '').up()
+          .ele('Name', outputConnectionArr[i][1]).up()
+          .ele('ToolId', { value: i+7}).up()
+      .end({pretty: 'True'})
+
+      questionOutputs += node
+    }
+    return questionOutputs
+  }
+
+  // ** This section invokes the create nodes functions and updates the node stores
+  createNodeInputXml(InputConnections, inputConnectionArray) 
+  createNodeOutputXml(OutputConnections, outputConnectionArray)
+  createConstantInputsXml(InputConnections, inputConnectionArray)
+  createConstantOutputsXml(OutputConnections, outputConnectionArray)
+  createQuestionInputsXml(InputConnections, inputConnectionArray)
+  createQuestionOutputsXml(OutputConnections, outputConnectionArray)
+
+  // ** This section concats each section of the xml
+  let nodesAll = '<Nodes>'
+  nodesAll += nodeTab
+  nodesAll += nodeInputs
+  nodesAll += nodeOutputs
+  nodesAll += '</Nodes>'
+  const finalNodes = nodesAll.replace(/<\?xml version="1.0"\?>/g, '')
+
+  let constantsAll = '<Constants>'
+  constantsAll += constantInputs
+  constantsAll += constantOutputs
+  constantsAll += '</Constants>'
+  const finalConstants = constantsAll.replace(/<\?xml version="1.0"\?>/g, '')
+
+  let questionsAll = `<Questions>
+    <Question>
+    <Type>Tab</Type>
+    <Description>Questions</Description>
+    <Name>Tab (1)</Name>
+    <ToolId value="1" />
+    <Questions>`
+  questionsAll += questionInputs
+  questionsAll += questionOutputs
+  questionsAll += '</Questions></Question></Questions>'
+  const finalQuestions = questionsAll.replace(/<\?xml version="1.0"\?>/g, '')
+
+  // ** This section does the final concats of the entire AlteryxDocument xml
+  let finalProperties = propertiesTopXml
+  finalProperties += finalConstants
+  finalProperties += propertiesMiddleXml
+  finalProperties += finalQuestions
+  finalProperties += propertiesBottomXml
+  let alteryxDocumentXml = `<?xml version="1.0"?>
+    <AlteryxDocument yxmdVer="11.3">`
+  alteryxDocumentXml += finalNodes
+  alteryxDocumentXml += finalProperties
+  alteryxDocumentXml += '</AlteryxDocument>'
+
+  fs.writeFile('test\\ayx-engine.yxmc', alteryxDocumentXml, (err) => {
     if (err) reject(err)
-    console.log(`ayx-engine.yxmc has been created.`)
-    resolve(console.log('finalXml: ', finalXml))
+    console.log(`${engineYxmcPath} has been created.`)
+    const inputResult = result
+    inputResult.engineYxmcPath = engineYxmcPath
+    resolve(inputResult)
   })
 })
 
