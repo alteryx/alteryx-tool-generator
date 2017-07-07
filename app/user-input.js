@@ -5,57 +5,57 @@ exports.getUserInput = () => new Promise((resolve, reject) => {
     properties: {
       ToolName: {
         description: 'Tool Name',
-        pattern: /^[a-zA-Z\s\d.\-_]+$/,
-        message: 'May only contain letters, numbers, spaces, periods, underscores, or dashes.',
+        pattern: /^[a-zA-Z\s\d.\-_]{1,100}$/,
+        message: 'Tool Name is required. May only contain letters, numbers, spaces, periods, underscores, or dashes and be fewer than 100 characters.',
         required: true
       },
       RootToolName: {
         description: 'Root Tool Name',
-        pattern: /^[a-zA-Z\s\d.\-_]+$/,
-        message: 'May only contain letters, numbers, spaces, periods, underscores, or dashes.',
+        pattern: /^[a-zA-Z\s\d.\-_]{1,100}$/,
+        message: 'Root Tool Name is required. May only contain letters, numbers, spaces, periods, underscores, or dashes and be fewer than 100 characters.',
         required: true
       },
       Version: {
         description: 'Tool Version',
-        pattern: /^[\d]+$/,
-        message: 'Must be written as a whole number.',
+        pattern: /^[\d]{0,25}$/,
+        message: 'Must be written as a whole number and be fewer than 25 characters.',
         default: 1,
         required: false
       },
       Author: {
         description: 'Author',
-        pattern: /^[a-zA-Z\s\d.\-_]+$/,
-        message: 'May only contain letters, numbers, spaces, periods, underscores, or dashes.',
+        pattern: /^[a-zA-Z\s\d.\-_]{1,150}$/,
+        message: 'Author is required. May only contain letters, numbers, spaces, periods, underscores, or dashes and be fewer than 150 characters.',
         required: true
       },
       Company: {
         description: 'Company',
-        pattern: /^[a-zA-Z\s\d.\-_]+$/,
-        message: 'May only contain letters, numbers, spaces, periods, underscores, or dashes.',
+        pattern: /^[a-zA-Z\s\d.\-_]{0,150}$/,
+        message: 'May only contain letters, numbers, spaces, periods, underscores, or dashes and be fewer than 150 characters.',
         required: false
       },
       Copyright: {
         description: 'Copyright',
-        pattern: /^[a-zA-Z\s\d.\-_]+$/,
-        message: 'May only contain letters, numbers, spaces, periods, underscores, or dashes.',
+        pattern: /^[\d]{4}$/,
+        message: 'May only contain numbers and be 4 characters long.',
         required: false
       },
       Category: {
         description: 'Category',
-        pattern: /^[a-zA-Z\s]+$/,
-        message: 'May only contain letters or spaces.',
+        pattern: /^[a-zA-Z\s]{0,100}$/,
+        message: 'May only contain letters or spaces and be fewer than 100 characters.',
         required: false
       },
       Description: {
         description: 'Description',
-        pattern: /^[a-zA-Z\s\d.\-_]+$/,
-        message: 'May only contain letters, numbers, spaces, periods, underscores, or dashes.',
+        pattern: /^[a-zA-Z\s\d.\-_]{0,1000}$/,
+        message: 'May only contain letters, numbers, spaces, periods, underscores, or dashes and be fewer than 1,000 characters.',
         required: false
       },
       SearchTags: {
         description: 'Search Tags (comma separated)',
-        pattern: /^[a-zA-Z\s,]+$/,
-        message: 'May only contain letters, spaces, or commas.',
+        pattern: /^[a-zA-Z\s,]{0,200}$/,
+        message: 'May only contain letters, spaces, or commas and be fewer than 200 characters.',
         required: false
       },
       Backend: {
@@ -66,21 +66,21 @@ exports.getUserInput = () => new Promise((resolve, reject) => {
       },
       IconPath: {
         description: 'Path to Icon image file',
-        pattern: /(.png$)|(.PNG$)/,
-        message: 'Please select a png image file.',
+        pattern: /(.png$)|(.PNG$){0,250}/,
+        message: 'Please select a png image file. Path must be fewer than 250 characters long.',
         default: 'default_icon.png',
         required: false
       },
       InputConnections: {
         description: 'Number of input connections',
-        pattern: /^\d{1}$/,
-        message: 'Must be written as a whole number and a maximum of nine.',
+        pattern: /^[0-5]{1}$/,
+        message: 'Must be written as a whole number between 0 and 5.',
         required: true
       },
       OutputConnections: {
         description: 'Number of output connections',
-        pattern: /^\d{1}$/,
-        message: 'Must be written as a whole number and a maximum of nine.',
+        pattern: /^[0-5]{1}$/,
+        message: 'Must be written as a whole number between 0 and 5.',
         required: true
       }
     }
@@ -106,8 +106,8 @@ exports.getUserInput = () => new Promise((resolve, reject) => {
       const name = `InputConnectionName_${i}`
       const nameValue = {
         description: `Input Connection Name ${i}`,
-        pattern: /^[a-zA-Z\s\d.\-_]+$/,
-        message: 'May only contain letters, numbers, spaces, periods, underscores, or dashes.',
+        pattern: /^[a-zA-Z\s\d.\-_]{1,100}$/,
+        message: 'May only contain letters, numbers, spaces, periods, underscores, or dashes and be fewer than 100 characters.',
         type: 'string',
         required: false
       }
@@ -132,8 +132,8 @@ exports.getUserInput = () => new Promise((resolve, reject) => {
       const name = `OutputConnectionName_${i}`
       const nameValue = {
         description: `Output Connection Name ${i}`,
-        pattern: /^[a-zA-Z\s\d.\-_]+$/,
-        message: 'May only contain letters, numbers, spaces, periods, underscores, or dashes.',
+        pattern: /^[a-zA-Z\s\d.\-_]{1,100}$/,
+        message: 'May only contain letters, numbers, spaces, periods, underscores, or dashes and be fewer than 100 characters.',
         type: 'string',
         required: false
       }
