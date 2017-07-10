@@ -6,3 +6,4 @@ node_modules
 .eslintrc.json
 .vscode
 app/test/Config.xml
+Supporting_Macros
