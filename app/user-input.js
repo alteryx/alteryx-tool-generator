@@ -6,32 +6,32 @@ exports.getUserInput = () => new Promise((resolve, reject) => {
       ToolName: {
         description: 'Tool Name',
         pattern: /^[a-zA-Z\s\d.\-_]{1,100}$/,
-        message: 'Tool Name is required. May only contain letters, numbers, spaces, periods, underscores, or dashes and be fewer than 100 characters.',
+        message: 'Tool Name is required. May only contain letters, numbers, spaces, periods, underscores, or dashes and be 100 characters or less.',
         required: true
       },
       RootToolName: {
         description: 'Root Tool Name',
         pattern: /^[a-zA-Z\s\d.\-_]{1,100}$/,
-        message: 'Root Tool Name is required. May only contain letters, numbers, spaces, periods, underscores, or dashes and be fewer than 100 characters.',
+        message: 'Root Tool Name is required. May only contain letters, numbers, spaces, periods, underscores, or dashes and be 100 characters or less.',
         required: true
       },
       Version: {
         description: 'Tool Version',
         pattern: /^[\d]{0,25}$/,
-        message: 'Must be written as a whole number and be fewer than 25 characters.',
+        message: 'Must be written as a whole number and be 25 characters or less.',
         default: 1,
         required: false
       },
       Author: {
         description: 'Author',
         pattern: /^[a-zA-Z\s\d.\-_]{1,150}$/,
-        message: 'Author is required. May only contain letters, numbers, spaces, periods, underscores, or dashes and be fewer than 150 characters.',
+        message: 'Author is required. May only contain letters, numbers, spaces, periods, underscores, or dashes and be 150 characters or less.',
         required: true
       },
       Company: {
         description: 'Company',
         pattern: /^[a-zA-Z\s\d.\-_]{0,150}$/,
-        message: 'May only contain letters, numbers, spaces, periods, underscores, or dashes and be fewer than 150 characters.',
+        message: 'May only contain letters, numbers, spaces, periods, underscores, or dashes and be 150 characters or less.',
         required: false
       },
       Copyright: {
@@ -43,19 +43,19 @@ exports.getUserInput = () => new Promise((resolve, reject) => {
       Category: {
         description: 'Category',
         pattern: /^[a-zA-Z\s]{0,100}$/,
-        message: 'May only contain letters or spaces and be fewer than 100 characters.',
+        message: 'May only contain letters or spaces and be 100 characters or less.',
         required: false
       },
       Description: {
         description: 'Description',
         pattern: /^[a-zA-Z\s\d.\-_]{0,1000}$/,
-        message: 'May only contain letters, numbers, spaces, periods, underscores, or dashes and be fewer than 1,000 characters.',
+        message: 'May only contain letters, numbers, spaces, periods, underscores, or dashes and be 1,000 characters or less.',
         required: false
       },
       SearchTags: {
         description: 'Search Tags (comma separated)',
         pattern: /^[a-zA-Z\s,]{0,200}$/,
-        message: 'May only contain letters, spaces, or commas and be fewer than 200 characters.',
+        message: 'May only contain letters, spaces, or commas and be 200 characters or less.',
         required: false
       },
       Backend: {
@@ -67,7 +67,7 @@ exports.getUserInput = () => new Promise((resolve, reject) => {
       IconPath: {
         description: 'Path to Icon image file',
         pattern: /(.png$)|(.PNG$){0,250}/,
-        message: 'Please select a png image file. Path must be fewer than 250 characters long.',
+        message: 'Please select a png image file. Path must be 250 characters or less.',
         default: 'default_icon.png',
         required: false
       },
@@ -107,7 +107,7 @@ exports.getUserInput = () => new Promise((resolve, reject) => {
       const nameValue = {
         description: `Input Connection Name ${i}`,
         pattern: /^[a-zA-Z\s\d.\-_]{1,100}$/,
-        message: 'May only contain letters, numbers, spaces, periods, underscores, or dashes and be fewer than 100 characters.',
+        message: 'May only contain letters, numbers, spaces, periods, underscores, or dashes and be 100 characters or less.',
         type: 'string',
         required: false
       }
@@ -133,7 +133,7 @@ exports.getUserInput = () => new Promise((resolve, reject) => {
       const nameValue = {
         description: `Output Connection Name ${i}`,
         pattern: /^[a-zA-Z\s\d.\-_]{1,100}$/,
-        message: 'May only contain letters, numbers, spaces, periods, underscores, or dashes and be fewer than 100 characters.',
+        message: 'May only contain letters, numbers, spaces, periods, underscores, or dashes and be 100 characters or less.',
         type: 'string',
         required: false
       }
