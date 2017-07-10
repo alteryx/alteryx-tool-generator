@@ -32,8 +32,7 @@ const result = {
 }
 
 // Results: better practice to call results separately from the tests
-const guiHTMLResult = guiHTML.createGuiHTML(result).Promise
-console.log(result.GuiHTMLData)
+const guiHTMLResult = guiHTML.createGuiHTML(result).promise
 const fileName = `${result.ToolName}_v${result.Version}_Gui.html`
 const fileData = fs.readFileSync(result.GuiHTMLPath)
 const titlePattern = /<title>.*<\/title>/

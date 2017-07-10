@@ -57,6 +57,5 @@ exports.createGuiHTML = (result) => {
     readGuiHTML(result)
       .then(updateGuiHTML)
       .then(writeUpdatedGuiHTML)
-
-  return result
+  return (result)
 }
