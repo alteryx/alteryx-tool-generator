@@ -28,7 +28,7 @@ exports.createToolNameConfigXml = (result) => new Promise((resolve, reject) => {
       Description,
       SearchTags,
       Backend,
-      IconPath,
+      IconPNGPath,
       InputConnections,
       OutputConnections,
       InputDetails,
@@ -100,7 +100,7 @@ exports.createToolNameConfigXml = (result) => new Promise((resolve, reject) => {
         .up()
       .up()
 
-      const inputOutputRoot = xml.ele('GuiSettings', { 'help': "", 'Html': html, 'Icon': IconPath, 'SDKVersion': '10.1' })
+      const inputOutputRoot = xml.ele('GuiSettings', { 'help': "", 'Html': html, 'Icon': IconPNGPath, 'SDKVersion': '10.1' })
       const inputRoot = inputOutputRoot.ele('InputConnections')
         for (let i = 0 ; i <= InputConnections - 1; i += 1) {
           const item = inputRoot.ele('Connection')
