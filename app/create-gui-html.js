@@ -7,7 +7,7 @@ const readGuiHTML = (result) => new Promise((resolve, reject) => {
   const userObj = result
   const JSGuiPath = `${userObj.AlteryxInstallDir}\\HtmlPlugins\\JavascriptPluginExample\\JavascriptPluginExampleGui.html`
   const directory = `${userObj.ToolDirectory}\\`
-  const fileName = `${userObj.ToolName}_v${userObj.Version}_Gui.html`
+  const fileName = `${userObj.ToolName}_v${userObj.Version}Gui.html`
   const filePath = `${directory}${fileName}`
   const fileData = fs.readFileSync(JSGuiPath, 'utf8')
 

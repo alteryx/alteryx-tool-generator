@@ -1,19 +1,20 @@
 // this module creates toolnameconfig.xml
 const fs = require('fs')
 const builder = require('xmlbuilder')
+const path = require('path')
 
 const translateBackend = (backend) => {
-  if (backend === 'M') {
+  if (backend.toLowerCase() === 'm') {
     return 'Macro'
   }
     return 'HTML'
 }
 
 const determinePath = (backend, toolName, version) => {
-  if (backend === 'M') {
-    return `${toolName}_v${version}\\Supporting_Macros\\${toolName}-engine.yxmc`
+  if (backend.toLowerCase() === 'm') {
+    return `${toolName}_v${version}\\Supporting_Macros\\${toolName}_v${version}Engine.yxmc`
   }
-    return `${toolName}Engine.html`
+    return `${toolName}_v${version}Engine.html`
 }
 
 exports.createToolNameConfigXml = (result) => new Promise((resolve, reject) => {
@@ -36,11 +37,12 @@ exports.createToolNameConfigXml = (result) => new Promise((resolve, reject) => {
       ToolDirectory
   } = result
 
+  const iconPath = path.parse(IconPNGPath)
   const engineDll = translateBackend(Backend)
   const engineDllEntryPoint = determinePath(Backend, ToolName, Version)
   // const help = `${RootToolName}.htm`
-  const html = `${ToolName}_v${Version}_Gui.html`
-  const toolNameConfigXmlPath = `${ToolDirectory}\\${ToolName}_Config.xml`
+  const html = `${ToolName}_v${Version}Gui.html`
+  const toolNameConfigXmlPath = `${ToolDirectory}\\${ToolName}_v${Version}Config.xml`
 
   // Pull input connection details into an array
   const inputNames = Object.keys(InputDetails)
@@ -81,12 +83,12 @@ exports.createToolNameConfigXml = (result) => new Promise((resolve, reject) => {
       tempArray = []
   }
 
-  const xml = builder.create('AlteryxJavaScriptPlugin', {encoding: 'UTF-8'})
+  const xml = builder.create('AlteryxJavaScriptPlugin')
     .ele('EngineSettings', { 'EngineDllEntryPoint': engineDllEntryPoint, 'EngineDll': engineDll, 'SDKVersion': '10.1' }).up()
     .ele('Properties')
       .ele('MetaInfo')
         .ele('NameIsFileName', { 'value': 'True' }).up()
-        .ele('Name', ToolName).up()
+        .ele('Name', `${ToolName}_v${Version}`).up()
         .ele('Description', Description).up()
         .ele('RootToolName', RootToolName).up()
         .ele('ToolVersion', Version).up()
@@ -100,7 +102,7 @@ exports.createToolNameConfigXml = (result) => new Promise((resolve, reject) => {
         .up()
       .up()
 
-      const inputOutputRoot = xml.ele('GuiSettings', { 'help': "", 'Html': html, 'Icon': IconPNGPath, 'SDKVersion': '10.1' })
+      const inputOutputRoot = xml.ele('GuiSettings', { 'Help': "", 'Html': html, 'Icon': iconPath.base, 'SDKVersion': '10.1' })
       const inputRoot = inputOutputRoot.ele('InputConnections')
         for (let i = 0 ; i <= InputConnections - 1; i += 1) {
           const item = inputRoot.ele('Connection')
@@ -126,7 +128,7 @@ exports.createToolNameConfigXml = (result) => new Promise((resolve, reject) => {
     if (err) {
       reject(console.error(err))
     }
-    console.log(`${toolNameConfigXmlPath} has been created`)
+    console.log(`${toolNameConfigXmlPath} has been created.`)
     const inputResult = result
     inputResult.ToolNameConfigXml = toolNameConfigXmlPath
     resolve(inputResult)

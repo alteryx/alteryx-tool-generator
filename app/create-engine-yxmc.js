@@ -8,9 +8,13 @@ exports.createEngineYxmc = (result) => new Promise((resolve, reject) => {
     InputConnections,
     OutputDetails,
     OutputConnections,
-    ToolDirectory
+    ToolDirectory,
+    Version
   } = result
-  const engineYxmcPath = `${ToolDirectory}\\${ToolName}_Engine.yxmc`
+  const engineYxmcPath = `${ToolDirectory}\\Supporting_Macros\\${ToolName}_v${Version}Engine.yxmc`
+  const supportingMacros = `${ToolDirectory}\\Supporting_Macros`
+  // create Supporting_Macros folder right away
+  fs.mkdirSync(supportingMacros)
   // these variables will store the nodes for inputs and outputs
   let nodeInputs = ''
   let nodeOutputs = ''
@@ -37,7 +41,7 @@ exports.createEngineYxmc = (result) => new Promise((resolve, reject) => {
     <LayoutType>Horizontal</LayoutType>`
   const propertiesMiddleXml = `<MetaInfo>
     <NameIsFileName value="True" />
-    <Name>${ToolName}_Engine</Name>
+    <Name>${ToolName}_v${Version}Engine</Name>
     <Description />
     <RootToolName />
     <ToolVersion />
@@ -113,8 +117,7 @@ exports.createEngineYxmc = (result) => new Promise((resolve, reject) => {
       outputConnectionArray.push(tempArray)
       tempArray = []
   }
-  console.log('inputConnectionArray: ', inputConnectionArray)
-  console.log('outputConnectionArray: ', outputConnectionArray)
+  
   // ** This section are the functions that create the nodes for input and outputs within the <Nodes> parent
   // this function creates the Macro Input nodes and concats them into nodeInputs
   // inputConnections iterates the for loop and inputConnectionArr contains the input information needed
