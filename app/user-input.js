@@ -60,7 +60,7 @@ exports.getUserInput = () => new Promise((resolve, reject) => {
       },
       Backend: {
         description: 'Will the engine for your tool be a macro (M) or JavaScript (J) file?',
-        pattern: /M{1}|J{1}/,
+        pattern: /M{1}|J{1}|m{1}|j{1}/,
         message: 'Please enter M (macro) or J (JavaScript).',
         required: true
       },
