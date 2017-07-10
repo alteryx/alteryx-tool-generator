@@ -1,49 +1,7 @@
 const fs = require('fs')
 const builder = require('xmlbuilder')
 
-// temp hard-coded object
-const tempResult = {
-  "ToolName": "TOOL",
-  "RootToolName": "ROOT",
-  "Version": "1",
-  "Author": "AUTH",
-  "Company": "COMP",
-  "Copyright": "2017",
-  "Category": "CAT",
-  "Description": "DESC",
-  "SearchTags": "tag,search",
-  "Backend": "M",
-  "IconPath": "default_icon.png",
-  "ToolDirectory": "Path",
-  "InputConnections": "4",
-  "OutputConnections": "1",
-  "InputDetails": {
-    "InputConnectionName_1": "In_A",
-    "InputConnectionLabel_1": "A",
-    "InputConnectionName_2": "In_B",
-    "InputConnectionLabel_2": "B",
-    "InputConnectionName_3": "In_C",
-    "InputConnectionLabel_3": "C",
-    "InputConnectionName_4": "In_D",
-    "InputConnectionLabel_4": "D",
-    "InputConnectionName_5": "In_E",
-    "InputConnectionLabel_5": "E"
-  },
-  "OutputDetails": {
-    "OutputConnectionName_1": "Out_A",
-    "OutputConnectionLabel_1": "A",
-    "OutputConnectionName_2": "Out_B",
-    "OutputConnectionLabel_2": "B",
-    "OutputConnectionName_3": "Out_C",
-    "OutputConnectionLabel_3": "C",
-    "OutputConnectionName_4": "Out_D",
-    "OutputConnectionLabel_4": "D",
-    "OutputConnectionName_5": "Out_E",
-    "OutputConnectionLabel_5": "E"
-  }
-}
-
-const createEngineYxmc = (result) => new Promise((resolve, reject) => {
+exports.createEngineYxmc = (result) => new Promise((resolve, reject) => {
   const {
     ToolName,
     InputDetails,
@@ -61,7 +19,7 @@ const createEngineYxmc = (result) => new Promise((resolve, reject) => {
   let questionInputs = ''
   let questionOutputs = ''
   // these variables are the <Properties> node broken into three sections
-  const propertiesTopXml = `  <Properties>
+  const propertiesTopXml = `<Properties>
     <Memory default="True" />
     <GlobalRecordLimit value="0" />
     <TempFiles default="True" />
@@ -155,7 +113,8 @@ const createEngineYxmc = (result) => new Promise((resolve, reject) => {
       outputConnectionArray.push(tempArray)
       tempArray = []
   }
-
+  console.log('inputConnectionArray: ', inputConnectionArray)
+  console.log('outputConnectionArray: ', outputConnectionArray)
   // ** This section are the functions that create the nodes for input and outputs within the <Nodes> parent
   // this function creates the Macro Input nodes and concats them into nodeInputs
   // inputConnections iterates the for loop and inputConnectionArr contains the input information needed
@@ -345,7 +304,7 @@ const createEngineYxmc = (result) => new Promise((resolve, reject) => {
   alteryxDocumentXml += finalProperties
   alteryxDocumentXml += '</AlteryxDocument>'
 
-  fs.writeFile('test\\ayx-engine.yxmc', alteryxDocumentXml, (err) => {
+  fs.writeFile(engineYxmcPath, alteryxDocumentXml, (err) => {
     if (err) reject(err)
     console.log(`${engineYxmcPath} has been created.`)
     const inputResult = result
@@ -353,5 +312,3 @@ const createEngineYxmc = (result) => new Promise((resolve, reject) => {
     resolve(inputResult)
   })
 })
-
-createEngineYxmc(tempResult)
