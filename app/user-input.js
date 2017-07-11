@@ -66,7 +66,7 @@ exports.getUserInput = () => new Promise((resolve, reject) => {
       },
       IconPath: {
         description: 'Path to Icon image file',
-        pattern: /(.png$)|(.PNG$){0,250}/,
+        pattern: /[A-Z]:\\[a-zA-Z\s\d.\-_\\]{0,246}.png$|[A-Z]:\\[a-zA-Z\s\d.\-_\\]{0,246}.PNG$/,
         message: 'Please select a png image file. Path must be 250 characters or less.',
         default: 'default_icon.png',
         required: false
