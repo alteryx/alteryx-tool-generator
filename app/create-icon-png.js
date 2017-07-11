@@ -8,7 +8,7 @@ const readIconPNG = (result) => new Promise((resolve, reject) => {
   let iconInput = `${userObj.IconPath}`
   if (fs.existsSync(iconInput) === false && iconInput !== 'default_icon.png' ) {
       iconInput = 'default_icon.png'
-      console.log('Icon path provided does not exist, default_icon.png used instead ')
+      console.log('Icon path provided does not exist, default_icon.png used instead.')
     }
   let iconPath = ''
   if (iconInput === 'default_icon.png') {
