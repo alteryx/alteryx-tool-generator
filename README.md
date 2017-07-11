@@ -24,24 +24,18 @@ Docs
 ---
 * **Link to Alteryx documentation on HTML SDK**
 
-Options
----
-* *__Placeholder__: for additional commands*
-
 Version Support
 ---
-* **Should we have this section?**
 
 |Technology|Version|
 |----------|------:|
-|Alteryx   |   11.3|
-|node      |  6.9.1|
-|npm       | 3.10.8|
+|[Alteryx](http://downloads.alteryx.com/)   |   11.3|
+|[node](https://nodejs.org/en/download/)      |  6.9.1|
+|[npm](https://nodejs.org/en/download/)       | 3.10.8|
 
 Contribute
 ---
-* *__Placeholder__: Need to discuss*
-* Contributions, questions, and comments are all welcome and encouraged. For code contributions, please see our **Contribution guide** before submitting a pull request. Website related issues should be filed on the [Alteryx Tool Generator](https://github.com/alteryx/alteryx-tool-generator/issues/new) issue tracker.
+* Contributions, questions, and comments are all welcome and encouraged. For code contributions, please submit a pull request. Website related issues should be filed on the [Alteryx Tool Generator](https://github.com/alteryx/alteryx-tool-generator/issues/new) issue tracker.
 
 License
 ---
