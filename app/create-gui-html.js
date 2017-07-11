@@ -25,9 +25,11 @@ const updateGuiHTML = (result) => new Promise((resolve, reject) => {
   const userObj = result
   const titlePattern = /<title>.*<\/title>/
   const scriptPattern = /<script src=.*><\/script>/
+  const bodyElement = '<body>'
 
   let modifiedHTML = userObj.GuiHTMLData.replace(titlePattern, `<title>${result.ToolName}</title>`)
   modifiedHTML = modifiedHTML.replace(scriptPattern, `<script src="${result.AlteryxInstallDir}\\RuntimeData\\HtmlAssets\\Workflows\\js\\engine_dialog_utils.js"></script>`)
+  modifiedHTML = modifiedHTML.replace(bodyElement, '<body style="visibility: visible">')
 
   userObj.GuiHTMLData = modifiedHTML
 
@@ -54,8 +56,8 @@ const writeUpdatedGuiHTML = (result) => new Promise((resolve, reject) => {
 
 // Creates Gui.html file, if successful message displays that file was created
 exports.createGuiHTML = (result) => {
-    readGuiHTML(result)
+  const userObj = readGuiHTML(result)
       .then(updateGuiHTML)
       .then(writeUpdatedGuiHTML)
-  return (result)
+  return userObj
 }

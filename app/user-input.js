@@ -24,14 +24,14 @@ exports.getUserInput = () => new Promise((resolve, reject) => {
       },
       Author: {
         description: 'Author',
-        pattern: /^[a-zA-Z\s\d.\-_]{1,150}$/,
-        message: 'Author is required. May only contain letters, numbers, spaces, periods, underscores, or dashes and be 150 characters or less.',
+        pattern: /^[a-zA-Z\s\d.\-_,]{1,150}$/,
+        message: 'Author is required. May only contain letters, numbers, spaces, periods, commas, underscores, or dashes and be 150 characters or less.',
         required: true
       },
       Company: {
         description: 'Company',
-        pattern: /^[a-zA-Z\s\d.\-_]{0,150}$/,
-        message: 'May only contain letters, numbers, spaces, periods, underscores, or dashes and be 150 characters or less.',
+        pattern: /^[a-zA-Z\s\d.\-_,]{0,150}$/,
+        message: 'May only contain letters, numbers, spaces, periods, commas, underscores, or dashes and be 150 characters or less.',
         required: false
       },
       Copyright: {
@@ -48,8 +48,8 @@ exports.getUserInput = () => new Promise((resolve, reject) => {
       },
       Description: {
         description: 'Description',
-        pattern: /^[a-zA-Z\s\d.\-_]{0,1000}$/,
-        message: 'May only contain letters, numbers, spaces, periods, underscores, or dashes and be 1,000 characters or less.',
+        pattern: /^[a-zA-Z\s\d.\-_,]{0,1000}$/,
+        message: 'May only contain letters, numbers, spaces, periods, commas, underscores, or dashes and be 1,000 characters or less.',
         required: false
       },
       SearchTags: {
