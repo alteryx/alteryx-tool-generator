@@ -109,7 +109,7 @@ exports.getUserInput = () => new Promise((resolve, reject) => {
         pattern: /^[a-zA-Z\s\d.\-_]{1,100}$/,
         message: 'May only contain letters, numbers, spaces, periods, underscores, or dashes and be 100 characters or less.',
         type: 'string',
-        required: false
+        required: true
       }
       inputSchema.properties[name] = nameValue
 
@@ -119,7 +119,7 @@ exports.getUserInput = () => new Promise((resolve, reject) => {
         pattern: /^[a-zA-Z\d]{1}$/,
         message: 'May only contain one letter or number.',
         type: 'string',
-        required: false
+        required: true
       }
       inputSchema.properties[label] = labelValue
     }
@@ -135,7 +135,7 @@ exports.getUserInput = () => new Promise((resolve, reject) => {
         pattern: /^[a-zA-Z\s\d.\-_]{1,100}$/,
         message: 'May only contain letters, numbers, spaces, periods, underscores, or dashes and be 100 characters or less.',
         type: 'string',
-        required: false
+        required: true
       }
       outputSchema.properties[name] = nameValue
 
@@ -145,19 +145,19 @@ exports.getUserInput = () => new Promise((resolve, reject) => {
         pattern: /^[a-zA-Z\d]{1}$/,
         message: 'May only contain one letter or number.',
         type: 'string',
-        required: false
+        required: true
       }
       outputSchema.properties[label] = labelValue
     }
 
     if (userInput.InputConnections > 0) {
-      console.log(`\n${userInput.InputConnections} input connections specified. Please enter name and label for each (Optional).\n`)
+      console.log(`\n${userInput.InputConnections} input connections specified. Please enter name and label for each (Required).\n`)
     }
     // prompt.get needs to be nested otherwise it acts weird and results in duplicate entries
     prompt.get(inputSchema, (inputErr, inputResult) => {
       userInput.InputDetails = inputResult
       if (userInput.OutputConnections > 0) {
-        console.log(`\n${userInput.OutputConnections} output connections specified. Please enter name and label for each (Optional).`)
+        console.log(`\n${userInput.OutputConnections} output connections specified. Please enter name and label for each (Required).`)
       }
       prompt.get(outputSchema, (outputErr, outputResult) => {
         userInput.OutputDetails = outputResult
