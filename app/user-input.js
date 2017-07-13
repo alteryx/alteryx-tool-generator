@@ -42,7 +42,7 @@ exports.getUserInput = () => new Promise((resolve, reject) => {
       },
       Category: {
         description: 'Category',
-        pattern: /^[a-zA-Z\s]^Favorites{0,100}$/,
+        pattern: /^(?!.*Favorites|favorites)[a-zA-Z\s]{0,100}$/,
         message: 'May only contain letters or spaces and be 100 characters or less. Cannot be categorized in Favorites.',
         required: false
       },
