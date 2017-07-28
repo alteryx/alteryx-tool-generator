@@ -3,7 +3,7 @@ Alteryx Tool Generator
 
 Overview
 ---
-The Alteryx Tool Generator scaffolds a custom Alteryx Designer tool using the HTML SDK and either the Javascript or Alteryx macro engine.
+The Alteryx Tool Generator scaffolds a custom Alteryx Designer tool using the HTML GUI SDK and either the Javascript or Alteryx macro engine.
 
 To use, run the main Node script and answer the prompts to write the needed files.
 
@@ -25,7 +25,7 @@ Getting Started
 
 Docs
 ---
-* **Link to Alteryx documentation on HTML SDK**
+* **Link to Alteryx documentation on HTML GUI SDK**
 
 Version Support
 ---
