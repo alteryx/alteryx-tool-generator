@@ -32,7 +32,7 @@ Version Support
 
 |Technology|Version|
 |----------|------:|
-|[Alteryx](http://downloads.alteryx.com/)   |   11.3|
+|[Alteryx](http://downloads.alteryx.com/)   |   11.5|
 |[node](https://nodejs.org/en/download/)      |  6.9.1|
 |[npm](https://nodejs.org/en/download/)       | 3.10.8|
 
