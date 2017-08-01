@@ -5,9 +5,9 @@ const readGuiHTML = (result) => new Promise((resolve, reject) => {
     reject(console.error('readGuiHTML: input undefined'))
   }
   const userObj = result
-  const JSGuiPath = `${userObj.AlteryxInstallDir}\\HtmlPlugins\\JavascriptPluginExample\\JavascriptPluginExampleGui.html`
+  const JSGuiPath = `${userObj.AlteryxInstallDir}\\HtmlPlugins\\HtmlGuiSdk\\HtmlGuiSdkGui.html`
   const directory = `${userObj.ToolDirectory}\\`
-  const fileName = `${userObj.ToolName}_v${userObj.Version}Gui.html`
+  const fileName = `${userObj.ToolName}Gui.html`
   const filePath = `${directory}${fileName}`
   const fileData = fs.readFileSync(JSGuiPath, 'utf8')
 

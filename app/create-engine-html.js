@@ -7,9 +7,9 @@ const readEngineHTML = (result) => new Promise((resolve, reject) => {
   }
 
   const userObj = result
-  const JSEnginePath = `${userObj.AlteryxInstallDir}\\HtmlPlugins\\JavascriptPluginExample\\JavascriptPluginExampleEngine.html`
+  const JSEnginePath = `${userObj.AlteryxInstallDir}\\HtmlPlugins\\HtmlGuiSdk\\HtmlGuiSdkEngine.html`
   const directory = `${userObj.ToolDirectory}\\`
-  const fileName = `${userObj.ToolName}_v${userObj.Version}Engine.html`
+  const fileName = `${userObj.ToolName}Engine.html`
   const filePath = `${directory}${fileName}`
   const fileData = fs.readFileSync(JSEnginePath, 'utf8')
 
@@ -23,7 +23,7 @@ const prepareInputText = (result) => {
   const details = result.InputDetails
   const detailArray = Object.keys(details).map((e) => details[e])
   const inputNames = detailArray.filter((value, index) => !(index % 2))
-
+  
   inputNames.forEach((item, index, arr) => {
     const newArr = arr
     newArr[index] = {
@@ -35,7 +35,6 @@ const prepareInputText = (result) => {
     }
     return newArr
   })
-
   return inputNames
 }
 
@@ -62,7 +61,7 @@ const updateEngineHTML = (result) => new Promise((resolve, reject) => {
 
   const userObj = result
 
-  const inputFind = /IncomingConnections:.*[\n\s]+.*[\n\s]+.*[\n\s]+.*[\n\s]+.*[\n\s]+.*[\n\s]+\}\]/m
+  const inputFind = /IncomingConnections:.*[\n\s]+.*[\n\s]+.*[\n\s]+.*[\n\s]+.*[\n\s]+.*[\n\s]+.*[\n\s]+.*[\n\s]+.*[\n\s]+.*[\n\s]+.*[\n\s]+.*[\n\s]+\}\]/m
   const inputReplace = `IncomingConnections: ${JSON.stringify(prepareInputText(userObj), null, 4)}`
 
   const outputFind = /OutgoingConnections:.*[\n\s]+.*[\n\s]+\}\]/m

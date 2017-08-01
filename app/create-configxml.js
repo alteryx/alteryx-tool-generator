@@ -19,7 +19,7 @@ exports.createConfigXml = (result) => new Promise((resolve, reject) => {
   const xml = builder.create('AlteryxJavaScriptPlugin', { encoding: 'UTF-8' })
     .ele('Properties')
       .ele('MetaInfo')
-        .ele('Name', `${ToolName}_v${Version}`).up()
+        .ele('Name', `${ToolName}`).up()
         .ele('Description', Description).up()
         .ele('ToolVersion', Version).up()
         .ele('CategoryName', Category).up()

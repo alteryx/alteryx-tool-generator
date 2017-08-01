@@ -12,9 +12,9 @@ const translateBackend = (backend) => {
 
 const determinePath = (backend, toolName, version) => {
   if (backend.toLowerCase() === 'm') {
-    return `${toolName}_v${version}\\Supporting_Macros\\${toolName}_v${version}Engine.yxmc`
+    return `${toolName}\\Supporting_Macros\\${toolName}Engine.yxmc`
   }
-    return `${toolName}_v${version}Engine.html`
+    return `${toolName}Engine.html`
 }
 
 exports.createToolNameConfigXml = (result) => new Promise((resolve, reject) => {
@@ -41,8 +41,8 @@ exports.createToolNameConfigXml = (result) => new Promise((resolve, reject) => {
   const engineDll = translateBackend(Backend)
   const engineDllEntryPoint = determinePath(Backend, ToolName, Version)
   // const help = `${RootToolName}.htm`
-  const html = `${ToolName}_v${Version}Gui.html`
-  const toolNameConfigXmlPath = `${ToolDirectory}\\${ToolName}_v${Version}Config.xml`
+  const html = `${ToolName}Gui.html`
+  const toolNameConfigXmlPath = `${ToolDirectory}\\${ToolName}Config.xml`
 
   // Pull input connection details into an array
   const inputNames = Object.keys(InputDetails)
@@ -88,7 +88,7 @@ exports.createToolNameConfigXml = (result) => new Promise((resolve, reject) => {
     .ele('Properties')
       .ele('MetaInfo')
         .ele('NameIsFileName', { 'value': 'True' }).up()
-        .ele('Name', `${ToolName}_v${Version}`).up()
+        .ele('Name', `${ToolName}`).up()
         .ele('Description', Description).up()
         .ele('RootToolName', RootToolName).up()
         .ele('ToolVersion', Version).up()

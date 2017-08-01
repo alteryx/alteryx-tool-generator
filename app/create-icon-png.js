@@ -18,7 +18,7 @@ const readIconPNG = (result) => new Promise((resolve, reject) => {
   }
 
   const directory = `${userObj.ToolDirectory}\\`
-  const fileName = `${userObj.ToolName}_v${userObj.Version}Icon.png`
+  const fileName = `${userObj.ToolName}Icon.png`
   const filePath = `${directory}${fileName}`
   const fileData = fs.readFileSync(iconPath)
 
