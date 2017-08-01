@@ -23,7 +23,7 @@ const prepareInputText = (result) => {
   const details = result.InputDetails
   const detailArray = Object.keys(details).map((e) => details[e])
   const inputNames = detailArray.filter((value, index) => !(index % 2))
-  console.log('prepareInputText() inputNames: ', inputNames)
+  
   inputNames.forEach((item, index, arr) => {
     const newArr = arr
     newArr[index] = {
@@ -33,10 +33,8 @@ const prepareInputText = (result) => {
         grouping: 'false'
       }
     }
-  console.log('prepareInputText() newArr: ', newArr)
     return newArr
   })
-  console.log('prepareInputText() inputNames: ', inputNames)
   return inputNames
 }
 
@@ -65,13 +63,9 @@ const updateEngineHTML = (result) => new Promise((resolve, reject) => {
 
   const inputFind = /IncomingConnections:.*[\n\s]+.*[\n\s]+.*[\n\s]+.*[\n\s]+.*[\n\s]+.*[\n\s]+.*[\n\s]+.*[\n\s]+.*[\n\s]+.*[\n\s]+.*[\n\s]+.*[\n\s]+\}\]/m
   const inputReplace = `IncomingConnections: ${JSON.stringify(prepareInputText(userObj), null, 4)}`
-  console.log('updateEngineHTML() inputFind: ', inputFind)
-  console.log('updateEngineHTML() inputReplace: ', inputReplace)
 
   const outputFind = /OutgoingConnections:.*[\n\s]+.*[\n\s]+\}\]/m
   const outputReplace = `OutgoingConnections: ${JSON.stringify(prepareOutputText(userObj), null, 4)}`
-  console.log('updateEngineHTML() outputFind: ', outputFind)
-  console.log('updateEngineHTML() outputReplace: ', outputReplace)
 
   userObj.EngineHTMLData = userObj.EngineHTMLData.replace(inputFind, inputReplace)
   userObj.EngineHTMLData = userObj.EngineHTMLData.replace(outputFind, outputReplace)
