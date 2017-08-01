@@ -9,7 +9,7 @@ const readEngineHTML = (result) => new Promise((resolve, reject) => {
   const userObj = result
   const JSEnginePath = `${userObj.AlteryxInstallDir}\\HtmlPlugins\\HtmlGuiSdk\\HtmlGuiSdkEngine.html`
   const directory = `${userObj.ToolDirectory}\\`
-  const fileName = `${userObj.ToolName}_v${userObj.Version}Engine.html`
+  const fileName = `${userObj.ToolName}Engine.html`
   const filePath = `${directory}${fileName}`
   const fileData = fs.readFileSync(JSEnginePath, 'utf8')
 

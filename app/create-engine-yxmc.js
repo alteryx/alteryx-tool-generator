@@ -11,7 +11,7 @@ exports.createEngineYxmc = (result) => new Promise((resolve, reject) => {
     ToolDirectory,
     Version
   } = result
-  const engineYxmcPath = `${ToolDirectory}\\Supporting_Macros\\${ToolName}_v${Version}Engine.yxmc`
+  const engineYxmcPath = `${ToolDirectory}\\Supporting_Macros\\${ToolName}Engine.yxmc`
   const supportingMacros = `${ToolDirectory}\\Supporting_Macros`
   // create Supporting_Macros folder right away
   fs.mkdirSync(supportingMacros)
@@ -41,7 +41,7 @@ exports.createEngineYxmc = (result) => new Promise((resolve, reject) => {
     <LayoutType>Horizontal</LayoutType>`
   const propertiesMiddleXml = `<MetaInfo>
     <NameIsFileName value="True" />
-    <Name>${ToolName}_v${Version}Engine</Name>
+    <Name>${ToolName}Engine</Name>
     <Description />
     <RootToolName />
     <ToolVersion />
