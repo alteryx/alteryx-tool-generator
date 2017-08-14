@@ -25,7 +25,7 @@ Getting Started
 
 Docs
 ---
-* [The Alteryx HTML GUI SDK Help](https://help.alteryx.com/developer/current/index.htm#HTML/Overview.htm)
+[The Alteryx HTML GUI SDK help page](https://help.alteryx.com/developer/current/index.htm#HTML/Overview.htm)
 
 Version Support
 ---
