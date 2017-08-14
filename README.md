@@ -21,7 +21,7 @@ Getting Started
 - Run the generator
    1. Use `node alteryx-tool-generator.js` to create your new tool
 - Access the written tool files
-   1. Navigate to the tool directory: *C:\Users\\{username}\AppData\Roaming\Alteryx\Tools*
+   1. Navigate to the tool directory: *C:\Users\\%USERNAME%\AppData\Roaming\Alteryx\Tools*
 
 Docs
 ---
