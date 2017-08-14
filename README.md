@@ -15,17 +15,18 @@ Features
 Getting Started
 ---
 - Install the generator using the command line
-   1. Clone the tool generator repository: [alteryx/alteryx-tool-generator](https://github.com/alteryx/alteryx-tool-generator.git)
+   1. Clone or download the tool generator repository: [alteryx/alteryx-tool-generator](https://github.com/alteryx/alteryx-tool-generator.git)
    2. Navigate to the directory housing *package.json*
    3. Use `npm install`
 - Run the generator
    1. Use `node alteryx-tool-generator.js` to create your new tool
 - Access the written tool files
-   1. Navigate to the tool directory: *C:\Users\\{username}\AppData\Roaming\Alteryx\Tools*
+   1. Navigate to the tool directory: *C:\Users\\%USERNAME%\AppData\Roaming\Alteryx\Tools*
 
 Docs
 ---
-* **Link to Alteryx documentation on HTML GUI SDK**
+* [The Alteryx HTML GUI SDK help page](https://help.alteryx.com/developer/current/index.htm#HTML/Overview.htm)
+* [Engine Works Blog Post](https://community.alteryx.com/t5/Engine-Works-Blog/Alteryx-Tool-Generator/ba-p/75216)
 
 Version Support
 ---
