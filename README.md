@@ -25,7 +25,8 @@ Getting Started
 
 Docs
 ---
-[The Alteryx HTML GUI SDK help page](https://help.alteryx.com/developer/current/index.htm#HTML/Overview.htm)
+* [The Alteryx HTML GUI SDK help page](https://help.alteryx.com/developer/current/index.htm#HTML/Overview.htm)
+* [Engine Works Blog Post](https://community.alteryx.com/t5/Engine-Works-Blog/Alteryx-Tool-Generator/ba-p/75216)
 
 Version Support
 ---
